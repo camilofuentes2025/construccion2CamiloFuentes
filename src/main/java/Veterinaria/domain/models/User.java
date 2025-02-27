@@ -1,4 +1,4 @@
-package persons;
+package Veterinaria.domain.models;
 
 public class User extends Person{
 	

@@ -1,12 +1,11 @@
-package pets;
+package Veterinaria.domain.models;
 import java.sql.Date;
-import persons.Veterinarian;
 
 
 public class ClinicalRecord {
 	
 	private Date createdDate;
-	private Veterinarian whoVeterian;
+	private User whoVeterian;
 	private String reason;
 	private String symptoms;
 	private String diagnostic;

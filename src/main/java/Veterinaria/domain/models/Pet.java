@@ -1,7 +1,5 @@
-package pets;
-
-import persons.PetOwner;
-
+package Veterinaria.domain.models;
+import Veterinaria.domain.models.PetOwner;
 public class Pet {
 	
 	private String petName;

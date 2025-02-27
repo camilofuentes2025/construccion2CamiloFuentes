@@ -1,4 +1,4 @@
-package pets;
+package Veterinaria.domain.models;
 
 public class ClinicalHistory {
 	
