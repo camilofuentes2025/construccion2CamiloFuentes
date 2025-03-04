@@ -1,12 +1,19 @@
 package Veterinaria.domain.models;
-import Veterinaria.domain.models.ClinicalRecord;
-import Veterinaria.domain.models.Pet;
-import Veterinaria.domain.models.PetOwner;
+
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@NoArgsConstructor
+
+
 public class invoice {
 	
 	private long invoiceID;
 	private Pet petID;
-	private PetOwner petOwnerID;
+	private Person petOwnerID;
 	private ClinicalRecord clinicalRecordID;
 	private ClinicalRecord medicineName;
 	private int price;
