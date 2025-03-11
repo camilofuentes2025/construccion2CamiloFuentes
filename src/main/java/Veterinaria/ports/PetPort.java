@@ -5,8 +5,8 @@ package Veterinaria.ports;
 import Veterinaria.domain.models.Pet;
 
 public interface PetPort {
-    Pet findByPetID(long petID);
-    void save(Pet pet);
-    void delete(Pet pet);
+    public Pet findById(long id);
+    public void savePet(Pet pet);
+    public void deletePet(Pet pet);
 }
 

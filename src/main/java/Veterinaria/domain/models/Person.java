@@ -9,7 +9,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Person {
 	
-	private long cedula;
+	private long Id;
 	private String name;
 	private long age;
 	private String role;
