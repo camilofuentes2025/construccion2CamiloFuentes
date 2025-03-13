@@ -1,5 +1,5 @@
 package Veterinaria.domain.services;
 
-public interface PersonService {
+public class LoginService {
 
 }

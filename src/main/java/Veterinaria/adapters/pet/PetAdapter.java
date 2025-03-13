@@ -2,8 +2,11 @@ package Veterinaria.adapters.pets;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import Veterinaria.adapters.persons.entity.PersonEntity;
 import Veterinaria.adapters.pets.entity.PetEntity;
 import Veterinaria.adapters.pets.repository.PetRepository;
+import Veterinaria.domain.models.Person;
 import Veterinaria.domain.models.Pet;
 import Veterinaria.ports.PetPort;
 import lombok.Getter;
@@ -32,7 +35,7 @@ public class PetAdapter implements PetPort {
 
     @Override
     public Pet findBypetId(long petID) {
-        PetEntity petEntity = petRepository.findByPetID(petID).orElse(null);
+        PetEntity petEntity = petRepository.findByPetID(petID);
         return convertToPet(petEntity);
     }
 
@@ -41,7 +44,7 @@ public class PetAdapter implements PetPort {
 
         Pet pet = new Pet();
         pet.setPetName(petEntity.getPetName());
-        pet.setOwner(new Person()); // Debes obtener la entidad Person
+        pet.setOwner(convertToPerson(petEntity.getOwner())); // Debes obtener la entidad Person
         pet.setAge(petEntity.getAge());
         pet.setPetID(petEntity.getPetID());
         pet.setAnimalSpecies(petEntity.getAnimalSpecies());
@@ -54,7 +57,7 @@ public class PetAdapter implements PetPort {
     private PetEntity convertToPetEntity(Pet pet) {
         PetEntity petEntity = new PetEntity();
         petEntity.setPetName(pet.getPetName());
-        petEntity.setOwner(pet.getOwner().getName()); // Ajustar según tu lógica
+        petEntity.setOwner(convertToPersonEntity(pet.getOwner())); // Ajustar según tu lógica
         petEntity.setAge(pet.getAge());
         petEntity.setPetID(pet.getPetID());
         petEntity.setAnimalSpecies(pet.getAnimalSpecies());
@@ -62,5 +65,25 @@ public class PetAdapter implements PetPort {
         petEntity.setCharacteristics(pet.getCharacteristics());
         petEntity.setWeight(pet.getWeight());
         return petEntity;
+    }
+    
+    private Person convertToPerson(PersonEntity personEntity) {
+        if (personEntity == null) return null;
+        
+        Person person = new Person();
+        person.setId(personEntity.getId());
+        person.setName(personEntity.getName());
+        person.setAge(personEntity.getAge());
+        person.setRole(personEntity.getRole());
+        return person;
+    }
+
+    private PersonEntity convertToPersonEntity(Person person) {
+        PersonEntity personEntity = new PersonEntity();
+        personEntity.setId(person.getId());
+        personEntity.setName(person.getName());
+        personEntity.setAge(person.getAge());
+        personEntity.setRole(person.getRole());
+        return personEntity;
     }
 }

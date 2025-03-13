@@ -9,6 +9,7 @@ import Veterinaria.ports.PersonPort;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.*;
 
 @Setter
 @Getter
@@ -34,7 +35,7 @@ public class PersonAdapter implements PersonPort {
     @Override
     public Person findById(long id) {
     	PersonEntity personEntity = personRepository.findById(id);
-    	return personAdapter(personEntity);
+    	return convertToPerson(personEntity);
     }
     /* PersonEntity personEntity = personRepository.findById(id).orElse(null);
         return convertToPerson(personEntity);*/

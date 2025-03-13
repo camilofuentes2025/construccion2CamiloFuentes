@@ -4,11 +4,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter
-@Setter
-@NoArgsConstructor
-
-
 public class invoice {
 	
 	private long invoiceID;
@@ -19,7 +14,55 @@ public class invoice {
 	private int price;
 	private long amount;
 	private String date;
+	public long getInvoiceID() {
+		return invoiceID;
+	}
+	public void setInvoiceID(long invoiceID) {
+		this.invoiceID = invoiceID;
+	}
+	public Pet getPet() {
+		return pet;
+	}
+	public void setPet(Pet pet) {
+		this.pet = pet;
+	}
+	public Person getOwner() {
+		return owner;
+	}
+	public void setOwner(Person owner) {
+		this.owner = owner;
+	}
+	public ClinicalRecord getOrder() {
+		return order;
+	}
+	public void setOrder(ClinicalRecord order) {
+		this.order = order;
+	}
+	public ClinicalRecord getMedicine() {
+		return medicine;
+	}
+	public void setMedicine(ClinicalRecord medicine) {
+		this.medicine = medicine;
+	}
+	public int getPrice() {
+		return price;
+	}
+	public void setPrice(int price) {
+		this.price = price;
+	}
+	public long getAmount() {
+		return amount;
+	}
+	public void setAmount(long amount) {
+		this.amount = amount;
+	}
+	public String getDate() {
+		return date;
+	}
+	public void setDate(String date) {
+		this.date = date;
+	}
 	
 	
 
-}
+}//cambio 

@@ -1,5 +1,6 @@
 package Veterinaria.adapters.clinicalrecord.entity;
 
+import Veterinaria.adapters.users.entity.UserEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -7,9 +8,7 @@ import lombok.Setter;
 
 @Entity
 @Table(name = "clinical_record")
-@Getter
-@Setter
-@NoArgsConstructor
+
 public class ClinicalRecordEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,7 +41,7 @@ public class ClinicalRecordEntity {
     private String dosage;
 
     @Column(name = "orderID")
-    private long orderID;
+    private Order orderID;
 
     @Column(name = "vaccination_history")
     private String vaccinationHistory;
