@@ -1,8 +1,4 @@
-
-    public User registerVeterinarian(Person person);
-    
-    
-}package Veterinaria.ports;
+package Veterinaria.ports;
 
 import Veterinaria.domain.models.Person;
 import Veterinaria.domain.models.User;
