@@ -12,12 +12,12 @@ import lombok.Setter;
 public class invoice {
 	
 	private long invoiceID;
-	private Pet petID;
-	private Person petOwnerID;
-	private ClinicalRecord clinicalRecordID;
-	private ClinicalRecord medicineName;
+	private Pet pet;
+	private Person owner;
+	private ClinicalRecord order;
+	private ClinicalRecord medicine;
 	private int price;
-	private boolean amount;
+	private long amount;
 	private String date;
 	
 	

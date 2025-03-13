@@ -1,5 +1,4 @@
 package Veterinaria.domain.models;
-import java.sql.Date;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,19 +8,17 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class ClinicalRecord {
-	
-	private Date createdDate;
-	private User whoVeterian;
-	private String reason;
-	private String symptoms;
-	private String diagnostic;
-	private String procedure;
-	private String medicine;
-	private String dosage;
-	private long orderID;
-	private String vaccinationrecord;
-	private String drugAllergies;
-	private String procedureDetails;
-	private boolean orderCancellation;
-	
+    private String date;              
+    private User veterinarian;        
+    private String consultationReason; 
+    private String symptoms;          
+    private String diagnosis;         
+    private String procedure;        
+    private String medication;        
+    private String dosage;            
+    private long orderID;             
+    private String vaccinationHistory; 
+    private String allergyMedications; 
+    private String procedureDetails;  
+    private boolean orderCanceled;    
 }

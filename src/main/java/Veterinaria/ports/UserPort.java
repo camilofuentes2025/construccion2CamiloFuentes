@@ -1,9 +1,17 @@
-package Veterinaria.ports;
 
+    public User registerVeterinarian(Person person);
+    
+    
+}package Veterinaria.ports;
+
+import Veterinaria.domain.models.Person;
 import Veterinaria.domain.models.User;
 
 public interface UserPort {
-    User findByUserName(String userName);
-    void save(User user);
-    void delete(User user);
+    boolean existUserName(String username);
+    void saveUser(User user);
+    User findByPersonId(long id);
+    User registerDealer(Person person);
+    User registerVeterinarian(Person person);
 }
+

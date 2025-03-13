@@ -7,9 +7,6 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Person {
-    private long id;
-    private String name;
-    private long age;
-    private String role;
+public class ClinicalHsitory {
+      
 }
