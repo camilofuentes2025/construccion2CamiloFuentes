@@ -1,5 +1,3 @@
-	
-}
 package Veterinaria.adapters.users.entity;
 
 import jakarta.persistence.Column;
