@@ -1,8 +1,5 @@
 package Veterinaria.domain.models;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 public class User extends Person {
     private String username;
