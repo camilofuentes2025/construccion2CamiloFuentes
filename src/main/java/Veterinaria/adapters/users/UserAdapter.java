@@ -46,7 +46,7 @@ public class UserAdapter implements UserPort {
 
     @Override
     public User findByPersonId(long id) {
-        UserEntity userEntity = userRepository.findByPerson_Id(id).orElse(null);
+        UserEntity userEntity = userRepository.findByPersonId(id).orElse(null);
         return convertToUser(userEntity);
     }
 
