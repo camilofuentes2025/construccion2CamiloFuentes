@@ -52,6 +52,10 @@ public class PersonAdapter implements PersonPort {
     }
 
     private PersonEntity convertToPersonEntity(Person person) {
+        if (person == null) {
+            throw new IllegalArgumentException("La persona no puede ser nula.");
+        }
+
         PersonEntity personEntity = new PersonEntity();
         personEntity.setId(person.getId());
         personEntity.setName(person.getName());

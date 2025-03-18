@@ -1,4 +1,5 @@
-package Veterinaria.adapters.user;
+
+package Veterinaria.adapters.users;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,14 +28,25 @@ public class UserAdapter implements UserPort {
 
     @Override
     public void saveUser(User user) {
+        if (user == null) {
+            throw new IllegalArgumentException("El usuario no puede ser nulo.");
+        }
+        if (user.getUsername() == null || user.getUsername().isEmpty()) {
+            throw new IllegalArgumentException("El nombre de usuario no puede ser nulo o vacío.");
+        }
+        if (user.getPassword() == null || user.getPassword().length() < 8) {
+            throw new IllegalArgumentException("La contraseña debe tener al menos 8 caracteres.");
+        }
+
         UserEntity userEntity = convertToUserEntity(user);
         userRepository.save(userEntity);
         user.setId(userEntity.getId());
     }
 
+
     @Override
     public User findByPersonId(long id) {
-        UserEntity userEntity = userRepository.findByPersonId(id);
+        UserEntity userEntity = userRepository.findByPerson_Id(id).orElse(null);
         return convertToUser(userEntity);
     }
 
@@ -68,25 +80,25 @@ public class UserAdapter implements UserPort {
 
     private User convertToUser(UserEntity userEntity) {
         if (userEntity == null) return null;
-        
+
         User user = new User();
         user.setId(userEntity.getId());
-        user.setName(userEntity.getName());
-        user.setAge(userEntity.getAge());
-        user.setRole(userEntity.getRole());
+        user.setName(userEntity.getPerson().getName());
+        user.setAge(userEntity.getPerson().getAge());
+        user.setRole(userEntity.getPerson().getRole());
         user.setUsername(userEntity.getUsername());
         user.setPassword(userEntity.getPassword());
         return user;
     }
 
+
     private UserEntity convertToUserEntity(User user) {
         UserEntity userEntity = new UserEntity();
         userEntity.setId(user.getId());
-        userEntity.setName(user.getName());
-        //userEntity.setAge(user.getAge());
-        userEntity.setRole(user.getRole());
+        userEntity.setPerson(convertToPersonEntity(user)); // Relación con PersonEntity
         userEntity.setUsername(user.getUsername());
         userEntity.setPassword(user.getPassword());
         return userEntity;
     }
+
 }
