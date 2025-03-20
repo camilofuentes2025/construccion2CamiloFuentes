@@ -3,6 +3,7 @@ package Veterinaria.domain.models;
 
 
 public class ClinicalRecord {
+	private long historyID;
     private String date;              
     private User veterinarian;        
     private String consultationReason; 
@@ -16,6 +17,15 @@ public class ClinicalRecord {
     private String allergyMedications; 
     private String procedureDetails;  
     private boolean orderCanceled;
+    
+    
+    
+	public long getHistoryID() {
+		return historyID;
+	}
+	public void setHistoryID(long historyID) {
+		this.historyID = historyID;
+	}
 	public String getDate() {
 		return date;
 	}

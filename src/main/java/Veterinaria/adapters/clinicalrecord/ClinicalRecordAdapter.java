@@ -4,7 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import Veterinaria.adapters.clinicalrecord.entity.ClinicalRecordEntity;
 import Veterinaria.adapters.clinicalrecord.repository.ClinicalRecordRepository;
+import Veterinaria.adapters.users.entity.UserEntity;
 import Veterinaria.domain.models.ClinicalRecord;
+import Veterinaria.domain.models.User;
 import Veterinaria.ports.ClinicalRecordPort;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -59,7 +61,7 @@ public class ClinicalRecordAdapter implements ClinicalRecordPort {
         record.setProcedure(recordEntity.getProcedure());
         record.setMedication(recordEntity.getMedication());
         record.setDosage(recordEntity.getDosage());
-        record.setOrderID(recordEntity.getOrderID());
+        record.setOrderID(recordEntity.getOrderID());//crear un metodo para convertir del order entity a order del modelo
         record.setVaccinationHistory(recordEntity.getVaccinationHistory());
         record.setAllergyMedications(recordEntity.getAllergyMedications());
         record.setProcedureDetails(recordEntity.getProcedureDetails());
@@ -89,9 +91,11 @@ public class ClinicalRecordAdapter implements ClinicalRecordPort {
     // Métodos para convertir User
     private User convertToUser(UserEntity userEntity) {
         // Implementar lógica de conversión
+    	return null;
     }
 
     private UserEntity convertToUserEntity(User user) {
         // Implementar lógica de conversión
+    	return null;
     }
 }
