@@ -5,8 +5,8 @@ public class invoice {
 	private long invoiceID;
 	private Pet pet;
 	private Person owner;
-	private ClinicalRecord order;
-	private ClinicalRecord medicine;
+	private Order order;
+	private String medicine;
 	private int price;
 	private long amount;
 	private String date;
@@ -28,16 +28,16 @@ public class invoice {
 	public void setOwner(Person owner) {
 		this.owner = owner;
 	}
-	public ClinicalRecord getOrder() {
+	public Order getOrder() {
 		return order;
 	}
-	public void setOrder(ClinicalRecord order) {
+	public void setOrder(Order order) {
 		this.order = order;
 	}
-	public ClinicalRecord getMedicine() {
+	public String getMedicine() {
 		return medicine;
 	}
-	public void setMedicine(ClinicalRecord medicine) {
+	public void setMedicine(String medicine) {
 		this.medicine = medicine;
 	}
 	public int getPrice() {

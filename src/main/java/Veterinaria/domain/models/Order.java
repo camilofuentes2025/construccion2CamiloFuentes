@@ -5,7 +5,7 @@ public class Order {
     private Pet pet;
     private Person owner;
     private User veterinarian;
-    private ClinicalRecord clinicalRecord;
+    private String medicine;
     private String date;
 	public long getOrderID() {
 		return orderID;
@@ -31,17 +31,19 @@ public class Order {
 	public void setVeterinarian(User veterinarian) {
 		this.veterinarian = veterinarian;
 	}
-	public ClinicalRecord getClinicalRecord() {
-		return clinicalRecord;
+	public String getMedicine() {
+		return medicine;
 	}
-	public void setClinicalRecord(ClinicalRecord clinicalRecord) {
-		this.clinicalRecord = clinicalRecord;
+	public void setMedicine(String medicine) {
+		this.medicine = medicine;
 	}
 	public String getDate() {
 		return date;
 	}
 	public void setDate(String date) {
 		this.date = date;
+	}
+	
 	}
     
     
