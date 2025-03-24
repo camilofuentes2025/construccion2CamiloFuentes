@@ -8,4 +8,6 @@ public interface OrderPort {
     void saveOrder(Order order);
     Order findByOrderID(long orderID);
     List<Order> findAllOrders();
+    void showOrder(Order order);
+
 }

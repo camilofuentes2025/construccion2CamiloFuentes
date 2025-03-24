@@ -8,8 +8,12 @@ public class DealerService {
 
     public void consultOrder(Order order){
         if (orderPort.existOrder(order.getOrderID()) ){
-            
+            orderPort.showOrder(order);
+        }else{
+            System.out.println("No existe un factura relacionada con esa id");
         }
     }
+
+    public void 
 
 }
