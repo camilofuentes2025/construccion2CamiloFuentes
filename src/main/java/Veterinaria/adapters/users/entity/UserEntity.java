@@ -4,15 +4,16 @@ import Veterinaria.adapters.persons.entity.PersonEntity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "user")
+@Table(name = "user") 
 public class UserEntity {
+
     @Id
     @Column(name = "id")
     private long id;
 
     @OneToOne
-    @JoinColumn(name = "person_id", referencedColumnName = "id")
-    private PersonEntity person;
+    @JoinColumn(name = "person_id", referencedColumnName = "id", nullable = false)
+    private PersonEntity person; 
 
     @Column(name = "username", nullable = false, unique = true)
     private String username;

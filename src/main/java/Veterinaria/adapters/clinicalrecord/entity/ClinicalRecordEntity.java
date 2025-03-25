@@ -7,25 +7,28 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.sql.Date;
+
 @Entity
 @Table(name = "clinical_record")
-@Setter
 @Getter
+@Setter
 @NoArgsConstructor
 public class ClinicalRecordEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "historyID")
+    @Column(name = "history_id") 
     private long historyID;
 
-    @Column(name = "date")
-    private String date;
+    @Column(name = "date", nullable = false) 
+    private Date date;
 
     @ManyToOne
-    @JoinColumn(name = "veterinarianID")
+    @JoinColumn(name = "veterinarian_id", nullable = false) 
     private UserEntity veterinarian;
 
-    @Column(name = "consultation_reason")
+    @Column(name = "consultation_reason", nullable = false)
     private String consultationReason;
 
     @Column(name = "symptoms")
@@ -43,8 +46,9 @@ public class ClinicalRecordEntity {
     @Column(name = "dosage")
     private String dosage;
 
-    @Column(name = "orderID")
-    private OrderEntity orderID;
+    @ManyToOne
+    @JoinColumn(name = "order_id") 
+    private OrderEntity order;
 
     @Column(name = "vaccination_history")
     private String vaccinationHistory;
@@ -55,7 +59,7 @@ public class ClinicalRecordEntity {
     @Column(name = "procedure_details")
     private String procedureDetails;
 
-    @Column(name = "order_canceled")
+    @Column(name = "order_canceled", nullable = false)
     private boolean orderCanceled;
 
 	public long getHistoryID() {
@@ -66,11 +70,11 @@ public class ClinicalRecordEntity {
 		this.historyID = historyID;
 	}
 
-	public String getDate() {
+	public Date getDate() {
 		return date;
 	}
 
-	public void setDate(String date) {
+	public void setDate(Date date) {
 		this.date = date;
 	}
 
@@ -130,12 +134,12 @@ public class ClinicalRecordEntity {
 		this.dosage = dosage;
 	}
 
-	public OrderEntity getOrderID() {
-		return orderID;
+	public OrderEntity getOrder() {
+		return order;
 	}
 
-	public void setOrderID(OrderEntity orderID) {
-		this.orderID = orderID;
+	public void setOrder(OrderEntity order) {
+		this.order = order;
 	}
 
 	public String getVaccinationHistory() {
@@ -168,7 +172,7 @@ public class ClinicalRecordEntity {
 
 	public void setOrderCanceled(boolean orderCanceled) {
 		this.orderCanceled = orderCanceled;
-	} 
+	}
     
     
 }

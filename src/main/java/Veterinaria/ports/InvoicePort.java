@@ -1,10 +1,10 @@
 package Veterinaria.ports;
 
-import Veterinaria.domain.models.invoice;
+import Veterinaria.domain.models.Invoice;
 
 public interface InvoicePort {
     boolean existInvoice(long invoiceID);
-    void saveInvoice(invoice invoice);
+    void saveInvoice(Invoice invoice);
 
 
 

@@ -1,5 +1,7 @@
 package Veterinaria.adapters.orders.entity;
 
+import java.sql.Date;
+
 import Veterinaria.adapters.persons.entity.PersonEntity;
 import Veterinaria.adapters.pets.entity.PetEntity;
 import Veterinaria.adapters.users.entity.UserEntity;
@@ -30,10 +32,10 @@ public class OrderEntity {
     private UserEntity veterinarian;
 
     @Column(name = "clinicalRecord")
-    private String clinicalRecord; // Assuming it's a String, change if needed
+    private String clinicalRecord;
 
     @Column(name = "date")
-    private String date;
+    private Date date; 
 
 	public long getOrderID() {
 		return orderID;
@@ -75,13 +77,13 @@ public class OrderEntity {
 		this.clinicalRecord = clinicalRecord;
 	}
 
-	public String getDate() {
-		return date;
-	}
+	public Date getDate() {
+        return date; 
+    }
 
-	public void setDate(String date) {
-		this.date = date;
-	}
-    
-    
-}
+    public void setDate(Date date) {
+        this.date = date; 
+    }
+    }
+
+

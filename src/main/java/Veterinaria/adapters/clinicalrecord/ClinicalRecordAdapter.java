@@ -4,22 +4,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import Veterinaria.adapters.clinicalrecord.entity.ClinicalRecordEntity;
 import Veterinaria.adapters.clinicalrecord.repository.ClinicalRecordRepository;
+import Veterinaria.adapters.orders.entity.OrderEntity;
 import Veterinaria.adapters.users.entity.UserEntity;
 import Veterinaria.domain.models.ClinicalRecord;
+import Veterinaria.domain.models.Order;
 import Veterinaria.domain.models.User;
 import Veterinaria.ports.ClinicalRecordPort;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
+import java.sql.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Setter
-@Getter
-@NoArgsConstructor
 @Service
 public class ClinicalRecordAdapter implements ClinicalRecordPort {
+
     @Autowired
     private ClinicalRecordRepository clinicalRecordRepository;
 
@@ -30,38 +27,67 @@ public class ClinicalRecordAdapter implements ClinicalRecordPort {
 
     @Override
     public void saveClinicalRecord(ClinicalRecord record) {
-        ClinicalRecordEntity recordEntity = convertToClinicalRecordEntity(record);
+        if (record == null || record.getVeterinarian() == null || record.getDateCreated() == null) {
+            throw new IllegalArgumentException("El registro clínico, veterinario y fecha no pueden ser nulos.");
+        }
+        ClinicalRecordEntity recordEntity = toEntity(record);
         clinicalRecordRepository.save(recordEntity);
         record.setHistoryID(recordEntity.getHistoryID());
     }
 
     @Override
     public ClinicalRecord findByHistoryID(long historyID) {
-        ClinicalRecordEntity recordEntity = clinicalRecordRepository.findByHistoryID(historyID).orElse(null);
-        return convertToClinicalRecord(recordEntity);
+        ClinicalRecordEntity recordEntity = clinicalRecordRepository.findByHistoryID(historyID);
+        if (recordEntity == null) {
+            throw new IllegalArgumentException("El registro clínico con ID " + historyID + " no existe.");
+        }
+        return toDomain(recordEntity);
     }
 
     @Override
     public List<ClinicalRecord> findAllClinicalRecords() {
         return clinicalRecordRepository.findAll().stream()
-                .map(this::convertToClinicalRecord)
+                .map(this::toDomain)
                 .collect(Collectors.toList());
     }
 
-    private ClinicalRecord convertToClinicalRecord(ClinicalRecordEntity recordEntity) {
+    public void updateClinicalRecord(ClinicalRecord record) {
+        if (!existClinicalRecord(record.getHistoryID())) {
+            throw new IllegalArgumentException("Registro clínico no existe para actualizar.");
+        }
+        saveClinicalRecord(record);
+    }
+
+    public List<ClinicalRecord> findByVeterinarian(long veterinarianID) {
+        return clinicalRecordRepository.findByVeterinarian_Id(veterinarianID).stream()
+                .map(this::toDomain)
+                .collect(Collectors.toList());
+    }
+
+    public List<ClinicalRecord> findByDate(Date date) {
+        if (date == null) {
+            throw new IllegalArgumentException("La fecha no puede ser nula");
+        }
+        return clinicalRecordRepository.findByDate(date).stream()
+                .map(this::toDomain)
+                .collect(Collectors.toList());
+    }
+
+    
+    private ClinicalRecord toDomain(ClinicalRecordEntity recordEntity) {
         if (recordEntity == null) return null;
 
         ClinicalRecord record = new ClinicalRecord();
         record.setHistoryID(recordEntity.getHistoryID());
-        record.setDate(recordEntity.getDate());
-        record.setVeterinarian(convertToUser(recordEntity.getVeterinarian()));
+        record.setDateCreated(recordEntity.getDate());
+        record.setVeterinarian(toDomain(recordEntity.getVeterinarian()));
         record.setConsultationReason(recordEntity.getConsultationReason());
         record.setSymptoms(recordEntity.getSymptoms());
         record.setDiagnosis(recordEntity.getDiagnosis());
         record.setProcedure(recordEntity.getProcedure());
         record.setMedication(recordEntity.getMedication());
         record.setDosage(recordEntity.getDosage());
-        record.setOrderID(recordEntity.getOrderID());//crear un metodo para convertir del order entity a order del modelo
+        record.setOrder(toDomain(recordEntity.getOrder()));
         record.setVaccinationHistory(recordEntity.getVaccinationHistory());
         record.setAllergyMedications(recordEntity.getAllergyMedications());
         record.setProcedureDetails(recordEntity.getProcedureDetails());
@@ -69,33 +95,62 @@ public class ClinicalRecordAdapter implements ClinicalRecordPort {
         return record;
     }
 
-    private ClinicalRecordEntity convertToClinicalRecordEntity(ClinicalRecord record) {
+    private ClinicalRecordEntity toEntity(ClinicalRecord record) {
+        if (record == null) return null;
+
         ClinicalRecordEntity recordEntity = new ClinicalRecordEntity();
         recordEntity.setHistoryID(record.getHistoryID());
-        recordEntity.setDate(record.getDate());
-        recordEntity.setVeterinarian(convertToUserEntity(record.getVeterinarian()));
+        recordEntity.setDate(record.getDateCreated());
+        recordEntity.setVeterinarian(toEntity(record.getVeterinarian()));
         recordEntity.setConsultationReason(record.getConsultationReason());
         recordEntity.setSymptoms(record.getSymptoms());
         recordEntity.setDiagnosis(record.getDiagnosis());
         recordEntity.setProcedure(record.getProcedure());
         recordEntity.setMedication(record.getMedication());
         recordEntity.setDosage(record.getDosage());
-        recordEntity.setOrderID(record.getOrderID());
+        recordEntity.setOrder(record.getOrder() != null ? toEntity(record.getOrder()) : null);
         recordEntity.setVaccinationHistory(record.getVaccinationHistory());
         recordEntity.setAllergyMedications(record.getAllergyMedications());
         recordEntity.setProcedureDetails(record.getProcedureDetails());
-        recordEntity.setOrderCanceled(record.isOrderCanceled());  
+        recordEntity.setOrderCanceled(record.isOrderCanceled());
         return recordEntity;
     }
 
-    // Métodos para convertir User
-    private User convertToUser(UserEntity userEntity) {
-        // Implementar lógica de conversión
-    	return null;
+    private User toDomain(UserEntity userEntity) {
+        if (userEntity == null) return null;
+        
+        User user = new User();
+        user.setId(userEntity.getId());
+        user.setName(userEntity.getUsername());
+        
+        return user;
     }
 
-    private UserEntity convertToUserEntity(User user) {
-        // Implementar lógica de conversión
-    	return null;
+    private UserEntity toEntity(User user) {
+        if (user == null) return null;
+        
+        UserEntity userEntity = new UserEntity();
+        userEntity.setId(user.getId());
+        userEntity.setUsername(user.getName());
+        
+        return userEntity;
+    }
+
+    private Order toDomain(OrderEntity orderEntity) {
+        if (orderEntity == null) return null;
+        
+        Order order = new Order();
+        order.setOrderID(orderEntity.getOrderID());
+        
+        return order;
+    }
+
+    private OrderEntity toEntity(Order order) {
+        if (order == null) return null;
+        
+        OrderEntity orderEntity = new OrderEntity();
+        orderEntity.setOrderID(order.getOrderID());
+        
+        return orderEntity;
     }
 }

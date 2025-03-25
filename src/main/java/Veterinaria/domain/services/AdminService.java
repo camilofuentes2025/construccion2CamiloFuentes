@@ -1,7 +1,61 @@
 package Veterinaria.domain.services;
 
+import Veterinaria.domain.models.User;
+import Veterinaria.ports.PersonPort;
+import Veterinaria.ports.UserPort;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
+@Service
+public class AdminService {
+
+    @Autowired
+    private PersonPort personPort;
+    
+    @Autowired
+    private UserPort userPort;
+
+    public void registerDealer(User dealer) throws Exception {
+        if (personPort.existPerson(dealer.getId())) {
+            throw new Exception("Ya existe una persona con esa cedula.");
+        }
+        if (userPort.existUserName(dealer.getUsername())) {
+            throw new Exception("Ya existe un usuario con ese nombre de usuario.");
+        }
+        
+        dealer.setRole("dealer");
+        personPort.savePerson(dealer);
+        userPort.saveUser(dealer);
+    }
+
+    public void registerVeterinarian(User veterinarian) throws Exception {
+        if (personPort.existPerson(veterinarian.getId())) {
+            throw new Exception("Ya existe una persona con esa cedula.");
+        }
+        if (userPort.existUserName(veterinarian.getUsername())) {
+            throw new Exception("Ya existe un usuario con ese nombre de usuario.");
+        }
+        
+        veterinarian.setRole("veterinarian");
+        personPort.savePerson(veterinarian);
+        userPort.saveUser(veterinarian);
+    }
+
+    public List<User> getUsersByRole(String role) throws Exception {
+        List<User> users = userPort.findUsersByRole(role);
+        if (users.isEmpty()) {
+            throw new Exception("No se encontraron usuarios con el rol: " + role);
+        }
+        return users;
+    }
+}
+
+
+/*package Veterinaria.domain.services;
+
+import org.springframework.stereotype.Service;
 
 import Veterinaria.domain.models.User;
 import Veterinaria.ports.PersonPort;
@@ -16,9 +70,9 @@ import lombok.Setter;
 @Service
 public class AdminService {
     private PersonPort personPort;
-    private UserPort    userPort;
+    private UserPort userPort;
 
- // Excepciones Personalizadas
+    // Excepciones Personalizadas
     public class PersonAlreadyExistsException extends RuntimeException {
         public PersonAlreadyExistsException(String message) {
             super("ya existe una persona con esa cedula");
@@ -50,31 +104,4 @@ public class AdminService {
             throw new IllegalArgumentException("El nombre de usuario no puede ser nulo o vacío.");
         }
     }
-
- /*public void register_seller(User seller){
-    if (personPort.existPerson(seller.getId())){
-        throw new Exception("ya existe una persona con esa cedula");
-    }
-    if (userPort.existUserName(seller.getUsername())) {
-        throw new Exception("ya existe un usuario con ese nombre de usuario");
-    }
-
-    personPort.savePerson(seller);
-    userPort.saveUser(seller);
- }
-
- public void register_veterinarian(User veterinarian){
-    if (personPort.existPerson(veterinarian.getId())){
-        throw new Exception("ya existe una persona con esa cedula");
-    }
-    if (userPort.existUserName(veterinarian.getUsername())) {
-        throw new Exception("ya existe un usuario con ese nombre de usuario");
-    }
-
-    personPort.savePerson(veterinarian);
-    userPort.saveUser(veterinarian);
- }
-
- 
-}*/
-}
+} */

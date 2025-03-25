@@ -1,6 +1,8 @@
 package Veterinaria.domain.models;
 
-public class invoice {
+import java.sql.Date;
+
+public class Invoice {
 	
 	private long invoiceID;
 	private Pet pet;
@@ -9,7 +11,7 @@ public class invoice {
 	private String medicine;
 	private int price;
 	private long amount;
-	private String date;
+	private Date dateCreated;
 	public long getInvoiceID() {
 		return invoiceID;
 	}
@@ -52,11 +54,12 @@ public class invoice {
 	public void setAmount(long amount) {
 		this.amount = amount;
 	}
-	public String getDate() {
-		return date;
+
+	public Date getDateCreated() {
+		return dateCreated;
 	}
-	public void setDate(String date) {
-		this.date = date;
+	public void setDateCreated(Date dateCreated) {
+		this.dateCreated = dateCreated;
 	}
 	
 	

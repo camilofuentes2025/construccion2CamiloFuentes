@@ -1,10 +1,10 @@
 package Veterinaria.domain.models;
 
-
+import java.sql.Date;
 
 public class ClinicalRecord {
 	private long historyID;
-    private String date;              
+	private Date dateCreated;              
     private User veterinarian;        
     private String consultationReason; 
     private String symptoms;          
@@ -12,13 +12,11 @@ public class ClinicalRecord {
     private String procedure;        
     private String medication;        
     private String dosage;            
-    private Order orderID;             
+    private Order order;             
     private String vaccinationHistory; 
     private String allergyMedications; 
     private String procedureDetails;  
     private boolean orderCanceled;
-    
-    
     
 	public long getHistoryID() {
 		return historyID;
@@ -26,12 +24,7 @@ public class ClinicalRecord {
 	public void setHistoryID(long historyID) {
 		this.historyID = historyID;
 	}
-	public String getDate() {
-		return date;
-	}
-	public void setDate(String date) {
-		this.date = date;
-	}
+	
 	public User getVeterinarian() {
 		return veterinarian;
 	}
@@ -74,11 +67,11 @@ public class ClinicalRecord {
 	public void setDosage(String dosage) {
 		this.dosage = dosage;
 	}
-	public Order getOrderID() {
-		return orderID;
+	public Order getOrder() {
+		return order;
 	}
-	public void setOrderID(Order orderID) {
-		this.orderID = orderID;
+	public void setOrder(Order order) {
+		this.order = order;
 	}
 	public String getVaccinationHistory() {
 		return vaccinationHistory;
@@ -99,10 +92,16 @@ public class ClinicalRecord {
 		this.procedureDetails = procedureDetails;
 	}
 	public boolean isOrderCanceled() {
-		return orderCanceled;
+	    return orderCanceled;
 	}
 	public void setOrderCanceled(boolean orderCanceled) {
-		this.orderCanceled = orderCanceled;
+	    this.orderCanceled = orderCanceled;
+	}
+	public Date getDateCreated() {
+		return dateCreated;
+	}
+	public void setDateCreated(Date dateCreated) {
+		this.dateCreated = dateCreated;
 	}    
     
     

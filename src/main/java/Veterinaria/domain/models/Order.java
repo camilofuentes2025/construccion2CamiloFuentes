@@ -1,12 +1,14 @@
 package Veterinaria.domain.models;
 
+import java.sql.Date;
+
 public class Order {
     private long orderID;
     private Pet pet;
     private Person owner;
     private User veterinarian;
     private String medicine;
-    private String date;
+    private Date dateCreated;
 	public long getOrderID() {
 		return orderID;
 	}
@@ -37,14 +39,14 @@ public class Order {
 	public void setMedicine(String medicine) {
 		this.medicine = medicine;
 	}
-	public String getDate() {
-		return date;
+	
+	public Date getDateCreated() {
+		return dateCreated;
 	}
-	public void setDate(String date) {
-		this.date = date;
+	public void setDateCreated(Date dateCreated) {
+		this.dateCreated = dateCreated;
 	}
 	
 	}
-    
-    
-}//cambio private ClininalRcord orderID por long orderID
+   
+//cambio private ClininalRcord orderID por long orderID
