@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface UserPort {
     boolean existUserName(String username); 
-    void saveUser(User user);
+    void saveUser(User user) throws Exception ;
     User findByPersonId(long id);
     User registerDealer(Person person); 
     User registerVeterinarian(Person person);

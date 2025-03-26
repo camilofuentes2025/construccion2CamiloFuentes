@@ -54,7 +54,7 @@ public class UserAdapter implements UserPort {
         user.setUsername(person.getName().toLowerCase() + "_dealer");
         user.setPassword("defaultpassword");
 
-        saveUser(user);
+        //saveUser(user);
         return user;
     }
 
@@ -68,7 +68,7 @@ public class UserAdapter implements UserPort {
         user.setUsername(person.getName().toLowerCase() + "_vet");
         user.setPassword("defaultpassword");
 
-        saveUser(user);
+        //saveUser(user);
         return user;
     }
 
