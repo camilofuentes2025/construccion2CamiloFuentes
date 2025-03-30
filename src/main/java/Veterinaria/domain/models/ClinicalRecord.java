@@ -102,7 +102,8 @@ public class ClinicalRecord {
 	}
 	public void setDateCreated(Date dateCreated) {
 		this.dateCreated = dateCreated;
-	}    
+	}
+	
     
     
 }//cambio private long orderID por private Order orderID

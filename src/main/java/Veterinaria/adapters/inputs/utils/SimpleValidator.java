@@ -1,6 +1,10 @@
 package Veterinaria.adapters.inputs.utils;
 
+import java.sql.Date;
+
 import org.springframework.stereotype.Component;
+
+import Veterinaria.domain.models.Pet;
 
 @Component
 public  class SimpleValidator {
@@ -19,5 +23,16 @@ public  class SimpleValidator {
 			throw new Exception(element + " debe ser un valor numerico");
 		}
 	}
-
+	public Pet petValidator(Pet value, String element)throws Exception{
+		if (value== null||value.equals(" ")) {
+			throw new Exception(element + " no tiene un valor valido");
+		}
+		return value;
+	}
+	public Date dateValidator(Date value, String element)throws Exception{
+		if (value== null||value.equals("")) {
+			throw new Exception(element + " no tiene una fecha valida");
+		}
+		return value;
+}
 }

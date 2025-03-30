@@ -74,8 +74,8 @@ public class UserAdapter implements UserPort {
 
     @Override
     public List<User> findUsersByRole(String role) {
-        List<UserEntity> userEntities = userRepository.findByRole(role);
-        return userEntities.stream()
+        List<UserEntity> userEntity = userRepository.findByRole(role);
+        return userEntity.stream()
                 .map(this::convertToUser)
                 .collect(Collectors.toList());
     }
