@@ -79,7 +79,7 @@ public class ClinicalRecordAdapter implements ClinicalRecordPort {
 
         ClinicalRecord record = new ClinicalRecord();
         record.setHistoryID(recordEntity.getHistoryID());
-        record.setDateCreated(recordEntity.getDate());
+        record.setDate(recordEntity.getDate());
         record.setVeterinarian(toDomain(recordEntity.getVeterinarian()));
         record.setConsultationReason(recordEntity.getConsultationReason());
         record.setSymptoms(recordEntity.getSymptoms());
@@ -100,7 +100,7 @@ public class ClinicalRecordAdapter implements ClinicalRecordPort {
 
         ClinicalRecordEntity recordEntity = new ClinicalRecordEntity();
         recordEntity.setHistoryID(record.getHistoryID());
-        recordEntity.setDate(record.getDateCreated());
+        recordEntity.setDate(record.getDate());
         recordEntity.setVeterinarian(toEntity(record.getVeterinarian()));
         recordEntity.setConsultationReason(record.getConsultationReason());
         recordEntity.setSymptoms(record.getSymptoms());

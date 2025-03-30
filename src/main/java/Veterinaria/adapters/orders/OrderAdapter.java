@@ -13,7 +13,6 @@ import Veterinaria.domain.models.Pet;
 import Veterinaria.domain.models.User;
 import Veterinaria.ports.OrderPort;
 
-import java.sql.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -46,6 +45,7 @@ public class OrderAdapter implements OrderPort {
         return orderRepository.findAll().stream()
                 .map(this::convertToOrder)
                 .collect(Collectors.toList());
+                
     }
 
     @Override

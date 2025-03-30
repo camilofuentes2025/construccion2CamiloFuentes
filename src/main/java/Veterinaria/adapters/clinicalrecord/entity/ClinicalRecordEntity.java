@@ -7,7 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.sql.Date;
+import java.util.*;
 
 @Entity
 @Table(name = "clinical_record")
@@ -70,13 +70,7 @@ public class ClinicalRecordEntity {
 		this.historyID = historyID;
 	}
 
-	public Date getDate() {
-		return date;
-	}
 
-	public void setDate(Date date) {
-		this.date = date;
-	}
 
 	public UserEntity getVeterinarian() {
 		return veterinarian;
