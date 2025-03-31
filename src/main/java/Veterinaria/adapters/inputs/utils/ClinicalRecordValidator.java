@@ -70,4 +70,5 @@ public class ClinicalRecordValidator extends SimpleValidator {
     	return booleanValidator(value, " orden cancelada ");
     }
     
+    
 }

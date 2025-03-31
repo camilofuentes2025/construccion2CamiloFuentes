@@ -2,7 +2,7 @@ package Veterinaria.domain.services;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
 import Veterinaria.adapters.clinicalrecord.entity.ClinicalRecordEntity;
@@ -27,7 +27,9 @@ public class VeterinarianService {
                                        String medication, String dosage, Order order, 
                                        String vaccinationHistory, String allergyMedications, 
                                        String procedureDetails, Pet pet) throws Exception {
-        ClinicalRecord record = new ClinicalRecord();
+    
+    	
+    	ClinicalRecord record = new ClinicalRecord();
         record.setHistoryID(historyID);
         record.setDate(new Date());
         record.setVeterinarian(veterinarian);

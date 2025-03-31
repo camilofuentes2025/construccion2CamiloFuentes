@@ -72,7 +72,7 @@ public class ClinicalRecordAdapter implements ClinicalRecordPort {
                 .map(this::toDomain)
                 .collect(Collectors.toList());
     }
-
+   
     
     private ClinicalRecord toDomain(ClinicalRecordEntity recordEntity) {
         if (recordEntity == null) return null;

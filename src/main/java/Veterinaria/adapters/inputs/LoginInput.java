@@ -66,7 +66,14 @@ public class LoginInput implements InputPort {
             String username = userValidator.usernameValidator(Utils.getReader().nextLine());
             System.out.println("Ingrese su contraseña:");
             String password = userValidator.passwordValidator(Utils.getReader().nextLine());
-
+            
+            User user = new User();
+            InputPort inputPort = inputs.get(user.getRole());
+            if (inputPort !=null) {
+            	inputPort.menu();
+            }else {
+            	System.out.println("no tienes acceso");
+            }
            
             /*User user = userValidator.usernameValidatorandpasswordValidator(username, password); 
             if (user == null) {

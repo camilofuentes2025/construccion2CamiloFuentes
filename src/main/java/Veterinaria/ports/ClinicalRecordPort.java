@@ -13,6 +13,6 @@ public interface ClinicalRecordPort {
     void updateClinicalRecord(ClinicalRecord record);
     List<ClinicalRecord> findByVeterinarian(long veterinarianID);
     List<ClinicalRecord> findByDate(Date date);
-    List<ClinicalRecord> findByPet_Id(long petID);
+   
     
 }

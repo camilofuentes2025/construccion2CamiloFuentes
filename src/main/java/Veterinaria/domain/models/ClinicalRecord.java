@@ -2,6 +2,7 @@ package Veterinaria.domain.models;
 
 import java.sql.Date;
 
+
 public class ClinicalRecord {
 	private long historyID;
 	private Date date;
@@ -98,14 +99,13 @@ public class ClinicalRecord {
 	public void setOrderCanceled(boolean orderCanceled) {
 	    this.orderCanceled = orderCanceled;
 	}
-	public java.sql.Date getDate() {
+	public Date getDate() {
 		return date;
 	}
 	public void setDate(Date date) {
 		this.date = date;
 	}
 	
-
 
 	
     

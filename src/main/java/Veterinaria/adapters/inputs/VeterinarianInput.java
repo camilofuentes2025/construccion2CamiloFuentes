@@ -36,11 +36,14 @@ public class VeterinarianInput implements InputPort{
     @Autowired
     private Date date;
     @Autowired
+    private ClinicalRecordPort ClinicalRecordPort;
+    @Autowired
     private PetValidator petValidator;
     @Autowired
     private PersonValidator personValidator;
     @Autowired
     private UserValidator userValidator;
+    
     @Autowired
     private UserPort userPort;
     private final String MENU = "Ingrese la opción:"
@@ -177,6 +180,8 @@ public class VeterinarianInput implements InputPort{
         clinicalRecord.setProcedureDetails(procedureDetails);
         clinicalRecord.setOrderCanceled(orderCanceled);
 
+        
+        clinicalRecordPort.saveClinicalRecord(clinicalRecord);
         System.out.println("Historia clínica registrada exitosamente.");
     }
 

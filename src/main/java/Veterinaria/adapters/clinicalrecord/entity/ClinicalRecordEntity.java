@@ -7,8 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.*;
-
+import java.sql.Date;
 @Entity
 @Table(name = "clinical_record")
 @Getter
