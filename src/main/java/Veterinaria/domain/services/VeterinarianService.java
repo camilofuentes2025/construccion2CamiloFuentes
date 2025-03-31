@@ -1,34 +1,26 @@
 package Veterinaria.domain.services;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 import Veterinaria.adapters.clinicalrecord.entity.ClinicalRecordEntity;
 import Veterinaria.adapters.orders.entity.OrderEntity;
+import Veterinaria.adapters.orders.repository.OrderRepository;
 import Veterinaria.domain.models.ClinicalRecord;
 import Veterinaria.domain.models.Pet;
 import Veterinaria.domain.models.User;
 import Veterinaria.ports.ClinicalRecordPort;
+import Veterinaria.ports.OrderPort;
 import Veterinaria.ports.PetPort;
 import Veterinaria.domain.models.Order;
+import Veterinaria.domain.models.Person;
 
 public class VeterinarianService {
     PetPort petPort;
     ClinicalRecordPort clinicalRecordPort;
-
-
-
-    public void consultMedicalhistory(long petID){
-        
-
-
-    }
-
-    public void editMedicalHistory(long petID){
-
-
-    }
+    OrderPort orderPort;
 
     public void registerClinicalRecord(long historyID, User veterinarian, String consultationReason, 
                                        String symptoms, String diagnosis, String procedure, 
@@ -61,54 +53,63 @@ public class VeterinarianService {
         System.out.println("✅ Historia clínica registrada.");
     }
 
-    public void getClinicalHistoryByPet(long petId) {
+    public void getClinicalHistoryByPet(long petId) throws Exception {
         List<ClinicalRecord> records = clinicalRecordPort.findByPet_Id(petId);
         if (records.isEmpty()) {
-            System.out.println("❌ No hay historial clínico para la mascota con ID: " + petId);
+            new Exception("❌ No hay historial clínico para la mascota con ID: " + petId);
         } else {
             records.forEach(System.out::println);
         }
     }
 
-    public String cancelOrderFromClinicalHistory(Long orderId, Long veterinarianId) {
-        // Buscar la orden
-        Optional<OrderEntity> optionalOrder = orderRepository.findById(orderId);
+    public void cancelOrderFromClinicalHistory(Long orderId)throws Exception{
+    // Buscar la orden
+    Order order = orderPort.findByOrderID(orderId)
+    if (order==null) {
+        new Exception("No existe una orden registrada con ese Id");
+    }
+    // Registrar la anulación en la historia clínica
+    ClinicalRecord record = new ClinicalRecord();
+    record.setPet(order.getPet());
+    record.setVeterinarian(order.getVeterinarian());
+    record.setDate(LocalDate.now());
+    record.setConsultationReason("Anulación de orden médica");
+    record.setProcedureDetails("Se ha registrado la anulación de la orden con ID " + orderId + ".");
+    record.setOrderCanceled(true);
+    clinicalRecordPort.saveClinicalRecord(record);
 
-        if (optionalOrder.isEmpty()) {
-            return "❌ No existe la orden con ID " + orderId;
+}
+public Order createOrder(User veterinarian, Pet pet, Person owner, String medicine) {
+        // Validar que los datos sean correctos
+        if (veterinarian == null || pet == null || owner == null || medicine == null || medicine.isEmpty()) {
+            throw new IllegalArgumentException("Todos los campos son obligatorios para crear una orden.");
         }
 
-        OrderEntity order = optionalOrder.get();
+        // Crear nueva orden
+        Order order = new Order();
+        order.setVeterinarian(veterinarian);
+        order.setPet(pet);
+        order.setOwner(owner);
+        order.setMedicine(medicine);
+        order.setDateCreated(new Date());
 
-        // Verificar que el veterinario que intenta anularla sea el que la creó
-        if (!order.getVeterinarian().getId().equals(veterinarianId)) {
-            return "⛔ Solo el veterinario que creó la orden puede anularla.";
+        // Guardar usando el puerto
+        orderPort.saveOrder(order);
+        
+        return order;
+    }
+
+    public Order consultOrder(long orderId) throws Exception {
+	       
+        if (!orderPort.existOrder(orderId)) {
+            throw new Exception("No existe una orden asociada con el ID: " + orderId);
         }
 
-        // Verificar si la orden ya fue cancelada
-        if (order.isCanceled()) {
-            return "⚠️ La orden con ID " + orderId + " ya estaba anulada.";
-        }
-
-        // Marcar la orden como cancelada
-        order.setCanceled(true);
-        orderRepository.save(order);
-
-        // Registrar la anulación en la historia clínica
-        ClinicalRecordEntity record = new ClinicalRecordEntity();
-        record.setPet(order.getPet());
-        record.setVeterinarian(order.getVeterinarian());
-        record.setDateCreated(new Date(System.currentTimeMillis()));
-        record.setConsultationReason("Anulación de orden médica");
-        record.setProcedureDetails("La orden con ID " + orderId + " ha sido anulada.");
-        record.setOrderCanceled(true);
-
-        clinicalRecordRepository.save(record);
-
-        return "✅ La orden " + orderId + " ha sido anulada correctamente y registrada en el historial clínico.";
+        return orderPort.findByOrderID(orderId);
     }
 
 
+    
 
 
 

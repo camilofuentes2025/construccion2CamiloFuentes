@@ -1,5 +1,6 @@
 package Veterinaria.domain.models;
-
+}
+import java.time.LocalDate;
 import java.util.Date;
 
 public class ClinicalRecord {
@@ -101,17 +102,17 @@ public class ClinicalRecord {
 	public java.util.Date getDate() {
 		return date;
 	}
-	public void setDate(java.util.Date date) {
+	public void setDate(LocalDate date) {
 		this.date = date;
 	}
 	public Pet getPet() {
 		return pet;
 	}
+
 	public void setPet(Pet pet) {
 		this.pet = pet;
 	}
 
-	
 
 	
     
