@@ -1,5 +1,7 @@
 package Veterinaria.adapters.inputs;
 
+import java.sql.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -11,6 +13,7 @@ import Veterinaria.adapters.inputs.utils.Utils;
 import Veterinaria.ports.ClinicalRecordPort;
 import Veterinaria.domain.models.Pet;
 import Veterinaria.ports.InputPort;
+import Veterinaria.ports.UserPort;
 import Veterinaria.domain.models.ClinicalRecord;
 import Veterinaria.domain.models.Person;
 import Veterinaria.domain.models.User;
@@ -31,12 +34,15 @@ public class VeterinarianInput implements InputPort{
     @Autowired
     private ClinicalRecordValidator clinicalRecordValidator;
     @Autowired
+    private Date date;
+    @Autowired
     private PetValidator petValidator;
     @Autowired
     private PersonValidator personValidator;
     @Autowired
     private UserValidator userValidator;
-
+    @Autowired
+    private UserPort userPort;
     private final String MENU = "Ingrese la opción:"
             + "\n 1. Consultar historia clínica de una mascota."
             + "\n 2. Registrar nueva historia clínica."
@@ -104,29 +110,73 @@ public class VeterinarianInput implements InputPort{
 
     private void registerClinicalRecord() throws Exception {
     	
-        System.out.println("Ingrese el ID de la mascota:");
-        long petID = petValidator.petIDValidator(Utils.getReader().nextLine());
-        System.out.println("Ingrese el ID de la historia clinica:");
+    	System.out.println("Ingrese el ID de la historia clínica:");
         long historyID = clinicalRecordValidator.historyIDValidator(Utils.getReader().nextLine());
+
+        
+            System.out.println("Ingrese la fecha de registro de la mascota (YYYY-MM-DD):");
+            String dateInput = Utils.getReader().nextLine();
+            try {
+                Date date = clinicalRecordValidator.dateValidator(dateInput, "Fecha de registro de la mascota");
+                System.out.println("Fecha válida registrada: " + date);
+            } catch (Exception e) {
+                System.out.println("Error al registrar la fecha: " + e.getMessage());
+            }
+        
+       
+        System.out.println("Ingrese la cédula del veterinario:");
+        long veterinarianCedula = userValidator.longValidator(Utils.getReader().nextLine(), "Cédula del veterinario");
+        User veterinarian = userPort.findByPersonId(veterinarianCedula);
+        if (veterinarian == null || !veterinarian.getRole().equalsIgnoreCase("veterinarian")) {
+            throw new Exception("El veterinario con cédula " + veterinarianCedula + " no está registrado o no tiene el rol de veterinario.");
+        }
+        
         System.out.println("Ingrese el motivo de consulta:");
         String consultationReason = clinicalRecordValidator.consultationReasonValidator(Utils.getReader().nextLine());
+
         System.out.println("Ingrese la sintomatología:");
         String symptoms = clinicalRecordValidator.symptomsValidator(Utils.getReader().nextLine());
+
         System.out.println("Ingrese el diagnóstico:");
         String diagnosis = clinicalRecordValidator.diagnosisValidator(Utils.getReader().nextLine());
+
         System.out.println("Ingrese el procedimiento:");
         String procedure = clinicalRecordValidator.procedureValidator(Utils.getReader().nextLine());
 
+        System.out.println("Ingrese el medicamento (si aplica):");
+        String medication = clinicalRecordValidator.medicationValidator(Utils.getReader().nextLine());
+
+        System.out.println("Ingrese la dosis del medicamento (si aplica):");
+        String dosage = clinicalRecordValidator.dosageValidator(Utils.getReader().nextLine());
+
+        System.out.println("Ingrese el historial de vacunación (si aplica):");
+        String vaccinationHistory = clinicalRecordValidator.vaccinationHistoryValidator(Utils.getReader().nextLine());
+
+        System.out.println("Ingrese medicamentos a los que presenta alergia:");
+        String allergyMedications = clinicalRecordValidator.allergyMedicationsValidator(Utils.getReader().nextLine());
+
+        System.out.println("Ingrese detalles adicionales del procedimiento:");
+        String procedureDetails = clinicalRecordValidator.procedureDetailsValidator(Utils.getReader().nextLine());
+
+        System.out.println("¿La orden fue anulada? (true/false):");
+        boolean orderCanceled = clinicalRecordValidator.orderCanceledValidator(Utils.getReader().nextLine());
+
+      
         ClinicalRecord clinicalRecord = new ClinicalRecord();
         clinicalRecord.setHistoryID(historyID);
-        clinicalRecord.setPetID(petID);
+        clinicalRecord.setDate(date);
+        clinicalRecord.setVeterinarian(veterinarian);
         clinicalRecord.setConsultationReason(consultationReason);
         clinicalRecord.setSymptoms(symptoms);
         clinicalRecord.setDiagnosis(diagnosis);
         clinicalRecord.setProcedure(procedure);
-        //clinicalRecord.setDateCreated(new java.sql.Date(System.currentTimeMillis()));
+        clinicalRecord.setMedication(medication);
+        clinicalRecord.setDosage(dosage);
+        clinicalRecord.setVaccinationHistory(vaccinationHistory);
+        clinicalRecord.setAllergyMedications(allergyMedications);
+        clinicalRecord.setProcedureDetails(procedureDetails);
+        clinicalRecord.setOrderCanceled(orderCanceled);
 
-        clinicalRecordPort.saveClinicalRecord(clinicalRecord);
         System.out.println("Historia clínica registrada exitosamente.");
     }
 

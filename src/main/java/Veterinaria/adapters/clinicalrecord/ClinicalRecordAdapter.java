@@ -27,7 +27,7 @@ public class ClinicalRecordAdapter implements ClinicalRecordPort {
 
     @Override
     public void saveClinicalRecord(ClinicalRecord record) {
-        if (record == null || record.getVeterinarian() == null || record.getDateCreated() == null) {
+        if (record == null || record.getVeterinarian() == null || record.getDate() == null) {
             throw new IllegalArgumentException("El registro clínico, veterinario y fecha no pueden ser nulos.");
         }
         ClinicalRecordEntity recordEntity = toEntity(record);

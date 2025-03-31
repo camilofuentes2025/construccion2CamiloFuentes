@@ -43,7 +43,7 @@ public class Order {
 	public Date getDateCreated() {
 		return dateCreated;
 	}
-	public void setDateCreated(java.util.Date dateCreated) {
+	public void setDateCreated(Date dateCreated) {
 		this.dateCreated = dateCreated;
 	}
 	

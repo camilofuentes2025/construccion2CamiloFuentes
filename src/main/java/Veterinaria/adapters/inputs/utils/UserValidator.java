@@ -12,4 +12,10 @@ public class UserValidator extends SimpleValidator {
 		public String passwordValidator(String value) throws Exception{
 			return stringValidator(value, " contraseña de usuario ");
 		}
+		
+		public String credentialsValidator(String value) throws Exception{
+			return stringValidator(value, " credenciales incorrectas ");
+		}
+		
+		
 }

@@ -18,7 +18,7 @@ public class PersonValidator extends SimpleValidator {
 	}
 	
 	public String roleValidator(String value) throws Exception {
-		return stringValidator(value, "rol de la persona ");
+		return stringValidator(value, " rol de la persona ");
 	}
 }
 

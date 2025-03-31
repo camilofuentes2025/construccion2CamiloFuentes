@@ -18,7 +18,7 @@ public class LoginInput implements InputPort {
     @Autowired
     private VeterinarianInput veterinarianInput;
     @Autowired
-    private SellerInput sellerInput;
+    private DealerInput dealerInput;
     @Autowired
     private OwnerInput ownerInput;
     @Autowired
@@ -26,11 +26,11 @@ public class LoginInput implements InputPort {
 
     private final String MENU = "Ingrese la opción que desea:\n 1. Iniciar sesión\n 2. Salir";
 
-    public LoginInput(AdminInput adminInput, VeterinarianInput veterinarianInput, SellerInput sellerInput, OwnerInput ownerInput) {
+    public LoginInput(AdminInput adminInput, VeterinarianInput veterinarianInput, DealerInput sellerInput, OwnerInput ownerInput) {
         super();
         this.adminInput = adminInput;
         this.veterinarianInput = veterinarianInput;
-        this.sellerInput = sellerInput;
+        this.dealerInput = dealerInput;
         this.ownerInput = ownerInput;
 
         this.inputs = new HashMap<>();
@@ -63,12 +63,12 @@ public class LoginInput implements InputPort {
     private void login() {
         try {
             System.out.println("Ingrese su usuario:");
-            String userName = userValidator.userNameValidator(Utils.getReader().nextLine());
+            String username = userValidator.usernameValidator(Utils.getReader().nextLine());
             System.out.println("Ingrese su contraseña:");
             String password = userValidator.passwordValidator(Utils.getReader().nextLine());
 
-            // Verificar credenciales y obtener el rol del usuario
-            User user = userValidator.validateCredentials(userName, password); // Método en UserValidator
+           
+            /*User user = userValidator.usernameValidatorandpasswordValidator(username, password); 
             if (user == null) {
                 System.out.println("Usuario o contraseña incorrectos.");
                 return;
@@ -82,7 +82,7 @@ public class LoginInput implements InputPort {
             }
 
             // Mostrar menú según el rol
-            inputPort.menu();
+            inputPort.menu();*/
         } catch (Exception e) {
             System.out.println("Error durante el inicio de sesión: " + e.getMessage());
         }
