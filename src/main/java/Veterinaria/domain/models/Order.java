@@ -1,61 +1,52 @@
 package Veterinaria.domain.models;
 
+import java.sql.Date;
 
 public class Order {
-	
-	private ClinicalRecord OrdenID;
-	private Pet petID;
-	private PetOwner petOwnerID;
-	private User veterinarianID;
-	private ClinicalRecord medicine;
-	private String date;
-	
-	public Order(ClinicalRecord ordenID, Pet petID, PetOwner petOwnerID, User veterinarianID,
-			ClinicalRecord medicine, String date) {
-		super();
-		OrdenID = ordenID;
-		this.petID = petID;
-		this.petOwnerID = petOwnerID;
-		this.veterinarianID = veterinarianID;
-		this.medicine = medicine;
-		this.date = date;
+    private long orderID;
+    private Pet pet;
+    private Person owner;
+    private User veterinarian;
+    private String medicine;
+    private Date dateCreated;
+	public long getOrderID() {
+		return orderID;
 	}
-	public ClinicalRecord getOrdenID() {
-		return OrdenID;
+	public void setOrderID(long orderID) {
+		this.orderID = orderID;
 	}
-	public void setOrdenID(ClinicalRecord ordenID) {
-		OrdenID = ordenID;
+	public Pet getPet() {
+		return pet;
 	}
-	public Pet getPetID() {
-		return petID;
+	public void setPet(Pet pet) {
+		this.pet = pet;
 	}
-	public void setPetID(Pet petID) {
-		this.petID = petID;
+	public Person getOwner() {
+		return owner;
 	}
-	public PetOwner getPetOwnerID() {
-		return petOwnerID;
+	public void setOwner(Person owner) {
+		this.owner = owner;
 	}
-	public void setPetOwnerID(PetOwner petOwnerID) {
-		this.petOwnerID = petOwnerID;
+	public User getVeterinarian() {
+		return veterinarian;
 	}
-	public User getVeterinarianID() {
-		return veterinarianID;
+	public void setVeterinarian(User veterinarian) {
+		this.veterinarian = veterinarian;
 	}
-	public void setVeterinarianID(User veterinarianID) {
-		this.veterinarianID = veterinarianID;
-	}
-	public ClinicalRecord getMedicine() {
+	public String getMedicine() {
 		return medicine;
 	}
-	public void setMedicine(ClinicalRecord medicine) {
+	public void setMedicine(String medicine) {
 		this.medicine = medicine;
 	}
-	public String getDate() {
-		return date;
+	
+	public Date getDateCreated() {
+		return dateCreated;
 	}
-	public void setDate(String date) {
-		this.date = date;
+	public void setDateCreated(Date dateCreated) {
+		this.dateCreated = dateCreated;
 	}
 	
-    
-}
+	}
+   
+//cambio private ClininalRcord orderID por long orderID
