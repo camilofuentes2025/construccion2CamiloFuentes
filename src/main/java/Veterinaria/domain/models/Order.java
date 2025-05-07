@@ -8,7 +8,8 @@ public class Order {
     private Person owner;
     private User veterinarian;
     private String medicine;
-    private Date dateCreated;
+    private Date date;
+    
 	public long getOrderID() {
 		return orderID;
 	}
@@ -39,14 +40,13 @@ public class Order {
 	public void setMedicine(String medicine) {
 		this.medicine = medicine;
 	}
+	public Date getDate() {
+		return date;
+	}
+	public void setDate(Date date) {
+		this.date = date;
+	}
 	
-	public Date getDateCreated() {
-		return dateCreated;
-	}
-	public void setDateCreated(Date dateCreated) {
-		this.dateCreated = dateCreated;
-	}
-	
-	}
+}
    
-//cambio private ClininalRcord orderID por long orderID
+

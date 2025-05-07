@@ -1,7 +1,7 @@
 package Veterinaria.domain.models;
 
-
 public class User extends Person {
+	
     private String username;
     private String password;
     
@@ -17,6 +17,5 @@ public class User extends Person {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-    
     
 }

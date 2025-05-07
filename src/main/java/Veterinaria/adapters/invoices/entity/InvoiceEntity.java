@@ -22,29 +22,29 @@ public class InvoiceEntity {
     @Column(name = "invoiceID")
     private long invoiceID;
 
-    @ManyToOne
-    @JoinColumn(name = "pet", nullable = false)
+    @OneToOne
+    @JoinColumn(name = "pet_id")
     private PetEntity pet;
 
-    @ManyToOne
-    @JoinColumn(name = "owner", nullable = false)
-    private PersonEntity owner;
+    @OneToOne
+    @JoinColumn(name = "owner_id")
+    private PersonEntity person;
 
-    @ManyToOne
-    @JoinColumn(name = "order")
+    @OneToOne
+    @JoinColumn(name = "order_id")
     private OrderEntity order;
 
     @Column(name = "medicine")
     private String medicine;
 
-    @Column(name = "price", nullable = false)
+    @Column(name = "price")
     private int price;
 
-    @Column(name = "amount", nullable = false)
+    @Column(name = "amount")
     private long amount;
 
-    @Column(name = "date_created", nullable = false)
-    private Date dateCreated;
+    @Column(name = "date")
+    private Date date;
 
 	public long getInvoiceID() {
 		return invoiceID;
@@ -62,12 +62,12 @@ public class InvoiceEntity {
 		this.pet = pet;
 	}
 
-	public PersonEntity getOwner() {
-		return owner;
+	public PersonEntity getPerson() {
+		return person;
 	}
 
-	public void setOwner(PersonEntity owner) {
-		this.owner = owner;
+	public void setPerson(PersonEntity person) {
+		this.person = person;
 	}
 
 	public OrderEntity getOrder() {
@@ -102,12 +102,12 @@ public class InvoiceEntity {
 		this.amount = amount;
 	}
 
-	public Date getDateCreated() {
-		return dateCreated;
+	public Date getDate() {
+		return date;
 	}
 
-	public void setDateCreated(Date dateCreated) {
-		this.dateCreated = dateCreated;
+	public void setDate(Date date) {
+		this.date = date;
 	}
     
     

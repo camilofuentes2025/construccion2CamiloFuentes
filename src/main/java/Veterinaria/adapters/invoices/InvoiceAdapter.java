@@ -38,26 +38,20 @@ public class InvoiceAdapter implements InvoicePort {
     }
 
     @Override
-    public Invoice findInvoiceByID(long invoiceID) {
+    public Invoice findByInvoiceID(long invoiceID) {
         return invoiceRepository.findById(invoiceID)
                 .map(this::convertToInvoice)
                 .orElseThrow(() -> new IllegalArgumentException("Factura no encontrada con ID: " + invoiceID));
     }
 
-    @Override
-    public List<Invoice> findInvoicesByDate(Date date) {
-        return invoiceRepository.findByDateCreated(date).stream()
-                .map(this::convertToInvoice)
-                .collect(Collectors.toList());
-    }
 
-    @Override
-    public List<Invoice> findAllInvoices() {
+   
+    /*public List<Invoice> findAllInvoices() {
         return invoiceRepository.findAll().stream()
                 .map(this::convertToInvoice)
                 .collect(Collectors.toList());
     }
-
+*/
     
     private Invoice convertToInvoice(InvoiceEntity entity) {
         if (entity == null) return null;
@@ -65,12 +59,12 @@ public class InvoiceAdapter implements InvoicePort {
         Invoice invoice = new Invoice();
         invoice.setInvoiceID(entity.getInvoiceID());
         invoice.setPet(convertToPet(entity.getPet())); 
-        invoice.setOwner(convertToPerson(entity.getOwner())); 
+        invoice.setOwner(convertToPerson(entity.getPerson())); 
         invoice.setOrder(convertToOrder(entity.getOrder())); 
         invoice.setMedicine(entity.getMedicine());
         invoice.setPrice(entity.getPrice());
         invoice.setAmount(entity.getAmount());
-        invoice.setDateCreated(entity.getDateCreated());
+        invoice.setDate(entity.getDate());
         return invoice;
     }
 
@@ -78,12 +72,12 @@ public class InvoiceAdapter implements InvoicePort {
         InvoiceEntity entity = new InvoiceEntity();
         entity.setInvoiceID(invoice.getInvoiceID());
         entity.setPet(convertToPetEntity(invoice.getPet())); 
-        entity.setOwner(convertToPersonEntity(invoice.getOwner())); 
+        entity.setPerson(convertToPersonEntity(invoice.getOwner())); 
         entity.setOrder(convertToOrderEntity(invoice.getOrder()));
         entity.setMedicine(invoice.getMedicine());
         entity.setPrice(invoice.getPrice());
         entity.setAmount(invoice.getAmount());
-        entity.setDateCreated(invoice.getDateCreated());
+        entity.setDate(invoice.getDate());
         return entity;
     }
      
@@ -92,7 +86,7 @@ public class InvoiceAdapter implements InvoicePort {
 
         Pet pet = new Pet();
         pet.setPetName(petEntity.getPetName());
-        pet.setOwner(convertToPerson(petEntity.getOwner()));
+        pet.setOwner(convertToPerson(petEntity.getPerson()));  // Debes obtener la entidad Person
         pet.setAge(petEntity.getAge());
         pet.setPetID(petEntity.getPetID());
         pet.setAnimalSpecies(petEntity.getAnimalSpecies());
@@ -105,16 +99,16 @@ public class InvoiceAdapter implements InvoicePort {
     private PetEntity convertToPetEntity(Pet pet) {
         if (pet == null) return null; 
 
-        PetEntity entity = new PetEntity();
-        entity.setPetID(pet.getPetID());
-        entity.setPetName(pet.getPetName());
-        entity.setOwner(convertToPersonEntity(pet.getOwner())); 
-        entity.setAge(pet.getAge());
-        entity.setAnimalSpecies(pet.getAnimalSpecies());
-        entity.setAnimalBreed(pet.getAnimalBreed());
-        entity.setCharacteristics(pet.getCharacteristics());
-        entity.setWeight(pet.getWeight());
-        return entity; 
+        PetEntity petEntity = new PetEntity();
+        petEntity.setPetName(pet.getPetName());
+        petEntity.setPerson(convertToPersonEntity(pet.getOwner()));
+        petEntity.setAge(pet.getAge());
+        petEntity.setPetID(pet.getPetID());
+        petEntity.setAnimalSpecies(pet.getAnimalSpecies());
+        petEntity.setAnimalBreed(pet.getAnimalBreed());
+        petEntity.setCharacteristics(pet.getCharacteristics());
+        petEntity.setWeight(pet.getWeight());
+        return petEntity;
     }
     
     private Person convertToPerson(PersonEntity personEntity) {
@@ -147,10 +141,10 @@ public class InvoiceAdapter implements InvoicePort {
         Order order = new Order();
         order.setOrderID(entity.getOrderID());
         order.setPet(convertToPet(entity.getPet())); 
-        order.setOwner(convertToPerson(entity.getPetOwner())); 
-        order.setVeterinarian(convertToUser(entity.getVeterinarian())); 
-        order.setMedicine(entity.getClinicalRecord());
-        order.setDateCreated(entity.getDate());
+        order.setOwner(convertToPerson(entity.getPerson())); 
+        order.setVeterinarian(convertToUser(entity.getUser())); 
+        order.setMedicine(entity.getMedicine());
+        order.setDate(entity.getDate());
         return order; 
         
     }
@@ -161,10 +155,10 @@ public class InvoiceAdapter implements InvoicePort {
         OrderEntity orderEntity = new OrderEntity();
         orderEntity.setOrderID(order.getOrderID());
         orderEntity.setPet(convertToPetEntity(order.getPet()));
-        orderEntity.setPetOwner(convertToPersonEntity(order.getOwner()));
-        orderEntity.setVeterinarian(convertToUserEntity(order.getVeterinarian()));
-        orderEntity.setClinicalRecord(order.getMedicine()); 
-        orderEntity.setDate(order.getDateCreated()); 
+        orderEntity.setPerson(convertToPersonEntity(order.getOwner()));
+        orderEntity.setUser(convertToUserEntity(order.getVeterinarian()));
+        orderEntity.setMedicine(order.getMedicine()); 
+        orderEntity.setDate(order.getDate()); 
 
         return orderEntity;
         
@@ -173,11 +167,23 @@ public class InvoiceAdapter implements InvoicePort {
    
 
     private User convertToUser(UserEntity userEntity) {
-    	return null;
+        if (userEntity == null) return null;
+
+        User user = new User();
+        user.setId(userEntity.getId());
+        user.setUsername(userEntity.getUsername());
+        user.setPassword(userEntity.getPassword()); // Considera si necesitas transformar contraseñas encriptadas.
+        return user;
     }
 
     private UserEntity convertToUserEntity(User user) {
-    	return null;
+        if (user == null) return null;
+
+        UserEntity userEntity = new UserEntity();
+        userEntity.setId(user.getId());
+        userEntity.setUsername(user.getUsername());
+        userEntity.setPassword(user.getPassword());
+        return userEntity;
     }
     
     

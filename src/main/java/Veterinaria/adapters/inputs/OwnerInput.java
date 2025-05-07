@@ -21,7 +21,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Component
 public class OwnerInput implements InputPort {
-
+	
     @Autowired
     private PetValidator petValidator;
     @Autowired
@@ -30,10 +30,8 @@ public class OwnerInput implements InputPort {
     private PersonValidator personValidator;
     @Autowired
     private PersonPort personPort;
-    @Autowired
-    private Person person;
-    @Autowired
-    private Pet pet;
+   
+    
 
     private final String MENU = "Ingrese la opción:"
             + "\n 1. Registrar nueva mascota."
@@ -84,9 +82,6 @@ public class OwnerInput implements InputPort {
         if (owner == null || !owner.getRole().equalsIgnoreCase("dueño mascota")) {
             throw new Exception("El dueño de mascota con cédula " + ownerID + " no está registrado o no tiene el rol de dueño mascota.");
         }
-
-     
-        pet.setOwner(owner);
 
         System.out.println("El dueño de la mascota fue validado correctamente.");
 

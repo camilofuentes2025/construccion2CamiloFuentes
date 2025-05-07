@@ -2,7 +2,14 @@ package Veterinaria.adapters.inputs.utils;
 
 import org.springframework.stereotype.Component;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 @Component
+@Setter
+@Getter
+@NoArgsConstructor
 public class UserValidator extends SimpleValidator {
 
 		public String usernameValidator(String value) throws Exception{

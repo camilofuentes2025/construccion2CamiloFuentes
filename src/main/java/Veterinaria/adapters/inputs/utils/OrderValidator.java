@@ -8,8 +8,14 @@ import Veterinaria.domain.models.Order;
 import Veterinaria.domain.models.Pet;
 import Veterinaria.domain.models.Person;
 import Veterinaria.domain.models.User;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Component
+@Setter
+@Getter
+@NoArgsConstructor
 public class OrderValidator extends SimpleValidator{
 
     public long orderIDValidator(String value) throws Exception {

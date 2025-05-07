@@ -11,7 +11,8 @@ public class Invoice {
 	private String medicine;
 	private int price;
 	private long amount;
-	private Date dateCreated;
+	private Date date;
+	
 	public long getInvoiceID() {
 		return invoiceID;
 	}
@@ -55,13 +56,11 @@ public class Invoice {
 		this.amount = amount;
 	}
 
-	public Date getDateCreated() {
-		return dateCreated;
+	public Date getDate() {
+		return date;
 	}
-	public void setDateCreated(Date dateCreated) {
-		this.dateCreated = dateCreated;
+	public void setDate(Date date) {
+		this.date = date;
 	}
-	
-	
 
-}//cambio 
+}

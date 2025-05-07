@@ -1,17 +1,18 @@
 package Veterinaria.adapters.pets.entity;
 
 import Veterinaria.adapters.persons.entity.PersonEntity;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "pet")
-
+@Getter
+@Setter
+@NoArgsConstructor
 public class PetEntity {
+
     @Id
     @Column(name = "petID")
     private long petID;
@@ -19,9 +20,9 @@ public class PetEntity {
     @Column(name = "petName")
     private String petName;
 
-    @JoinColumn(name = "owner")
+    @JoinColumn(name = "owner_id")
     @OneToOne
-    private PersonEntity owner;
+    private PersonEntity person;
 
     @Column(name = "age")
     private long age;
@@ -54,12 +55,12 @@ public class PetEntity {
 		this.petName = petName;
 	}
 
-	public PersonEntity getOwner() {
-		return owner;
+	public PersonEntity getPerson() {
+		return person;
 	}
 
-	public void setOwner(PersonEntity owner) {
-		this.owner = owner;
+	public void setPerson(PersonEntity person) {
+		this.person = person;
 	}
 
 	public long getAge() {
@@ -101,6 +102,5 @@ public class PetEntity {
 	public void setWeight(long weight) {
 		this.weight = weight;
 	}
-    
-    
+  
 }

@@ -33,8 +33,7 @@ public class VeterinarianInput implements InputPort{
     private ClinicalRecordPort clinicalRecordPort;
     @Autowired
     private ClinicalRecordValidator clinicalRecordValidator;
-    @Autowired
-    private Date date;
+    
     @Autowired
     private ClinicalRecordPort ClinicalRecordPort;
     @Autowired
@@ -129,7 +128,7 @@ public class VeterinarianInput implements InputPort{
        
         System.out.println("Ingrese la cédula del veterinario:");
         long veterinarianCedula = userValidator.longValidator(Utils.getReader().nextLine(), "Cédula del veterinario");
-        User veterinarian = userPort.findByPersonId(veterinarianCedula);
+        User veterinarian = userPort.findByPerson(veterinarianCedula);
         if (veterinarian == null || !veterinarian.getRole().equalsIgnoreCase("veterinarian")) {
             throw new Exception("El veterinario con cédula " + veterinarianCedula + " no está registrado o no tiene el rol de veterinario.");
         }
@@ -167,7 +166,7 @@ public class VeterinarianInput implements InputPort{
       
         ClinicalRecord clinicalRecord = new ClinicalRecord();
         clinicalRecord.setHistoryID(historyID);
-        clinicalRecord.setDate(date);
+        clinicalRecord.setDate(new Date(System.currentTimeMillis()));
         clinicalRecord.setVeterinarian(veterinarian);
         clinicalRecord.setConsultationReason(consultationReason);
         clinicalRecord.setSymptoms(symptoms);

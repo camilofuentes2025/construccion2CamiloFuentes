@@ -1,9 +1,10 @@
 package Veterinaria.domain.services;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.sql.Date;
 import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import Veterinaria.adapters.clinicalrecord.entity.ClinicalRecordEntity;
 import Veterinaria.adapters.orders.entity.OrderEntity;
@@ -13,106 +14,86 @@ import Veterinaria.domain.models.Pet;
 import Veterinaria.domain.models.User;
 import Veterinaria.ports.ClinicalRecordPort;
 import Veterinaria.ports.OrderPort;
+import Veterinaria.ports.PersonPort;
 import Veterinaria.ports.PetPort;
 import Veterinaria.domain.models.Order;
 import Veterinaria.domain.models.Person;
 
+@Service
 public class VeterinarianService {
-    PetPort petPort;
-    ClinicalRecordPort clinicalRecordPort;
-    OrderPort orderPort;
 
-    public void registerClinicalRecord(long historyID, User veterinarian, String consultationReason, 
-                                       String symptoms, String diagnosis, String procedure, 
-                                       String medication, String dosage, Order order, 
-                                       String vaccinationHistory, String allergyMedications, 
-                                       String procedureDetails, Pet pet) throws Exception {
-    
-    	
-    	ClinicalRecord record = new ClinicalRecord();
-        record.setHistoryID(historyID);
-        record.setDate(new Date());
-        record.setVeterinarian(veterinarian);
-        record.setConsultationReason(consultationReason);
-        record.setSymptoms(symptoms);
-        record.setDiagnosis(diagnosis);
-        record.setProcedure(procedure);
-        record.setMedication(medication);
-        record.setDosage(dosage);
-        record.setOrder(order);
-        record.setVaccinationHistory(vaccinationHistory);
-        record.setAllergyMedications(allergyMedications);
-        record.setProcedureDetails(procedureDetails);
-        record.setOrderCanceled(false);
-        record.setPet(pet);
+    @Autowired
+    private PetPort petPort;
 
+    @Autowired
+    private PersonPort personPort;
 
-        if (!petPort.existPet(record.getPet().getPetID())) {
-            throw new Exception("La mascota no esta registrada en el sistema");
+    @Autowired
+    private ClinicalRecordPort clinicalRecordPort;
+
+    @Autowired
+    private OrderPort orderPort;
+
+    public void registerPet(Pet pet) throws Exception {
+        if (petPort.existPet(pet.getPetID())) {
+            throw new Exception("Error: Ya existe una mascota registrada con el ID " + pet.getPetID());
         }
+        petPort.savePet(pet);
+    }
 
+    public void registerOwner(Person owner) throws Exception {
+        if (personPort.existPerson(owner.getId())) {
+            throw new Exception("Error: Ya existe un dueño registrado con el ID " + owner.getId());
+        }
+        personPort.savePerson(owner);
+    }
+
+    public void registerClinicalRecord(ClinicalRecord record) throws Exception {
+        if (record.getPetID() == null || !petPort.existPet(record.getPetID().getPetID())) {
+            throw new Exception("Error: La mascota con ID " + (record.getPetID() != null ? record.getPetID().getPetID() : "null") + " no está registrada.");
+        }
         clinicalRecordPort.saveClinicalRecord(record);
-        System.out.println("✅ Historia clínica registrada.");
     }
 
-    public void getClinicalHistoryByPet(long petId) throws Exception {
-        List<ClinicalRecord> records = clinicalRecordPort.findByPet_Id(petId);
+ 
+    public List<ClinicalRecord> getClinicalHistoryByPet(Pet pet) throws Exception {
+        List<ClinicalRecord> records = clinicalRecordPort.findByPetID(pet);
         if (records.isEmpty()) {
-            new Exception("❌ No hay historial clínico para la mascota con ID: " + petId);
-        } else {
-            records.forEach(System.out::println);
+            throw new Exception("Error: No se encontró historia clínica para la mascota con ID " + pet);
         }
+        return records;
     }
 
-    public void cancelOrderFromClinicalHistory(Long orderId)throws Exception{
-    // Buscar la orden
-    Order order = orderPort.findByOrderID(orderId)
-    if (order==null) {
-        new Exception("No existe una orden registrada con ese Id");
-    }
-    // Registrar la anulación en la historia clínica
-    ClinicalRecord record = new ClinicalRecord();
-    record.setPet(order.getPet());
-    record.setVeterinarian(order.getVeterinarian());
-    record.setDate(LocalDate.now());
-    record.setConsultationReason("Anulación de orden médica");
-    record.setProcedureDetails("Se ha registrado la anulación de la orden con ID " + orderId + ".");
-    record.setOrderCanceled(true);
-    clinicalRecordPort.saveClinicalRecord(record);
 
-}
-public Order createOrder(User veterinarian, Pet pet, Person owner, String medicine) {
-        // Validar que los datos sean correctos
-        if (veterinarian == null || pet == null || owner == null || medicine == null || medicine.isEmpty()) {
-            throw new IllegalArgumentException("Todos los campos son obligatorios para crear una orden.");
+    public Order createOrder(Order order) throws Exception {
+        if (!petPort.existPet(order.getPet().getPetID())) {
+            throw new Exception("Error: La mascota con ID " + order.getPet().getPetID() + " no está registrada.");
         }
-
-        // Crear nueva orden
-        Order order = new Order();
-        order.setVeterinarian(veterinarian);
-        order.setPet(pet);
-        order.setOwner(owner);
-        order.setMedicine(medicine);
-        order.setDateCreated(new Date());
-
-        // Guardar usando el puerto
         orderPort.saveOrder(order);
-        
         return order;
     }
 
-    public Order consultOrder(long orderId) throws Exception {
-	       
-        if (!orderPort.existOrder(orderId)) {
-            throw new Exception("No existe una orden asociada con el ID: " + orderId);
+ 
+    public void cancelOrder(Long orderId) throws Exception {
+        Order order = orderPort.findByOrderID(orderId);
+        if (order == null) {
+            throw new Exception("Error: No existe una orden con ID " + orderId);
         }
-
-        return orderPort.findByOrderID(orderId);
+        ClinicalRecord record = new ClinicalRecord();
+        record.setPetID(order.getPet());
+        record.setVeterinarian(order.getVeterinarian());
+        record.setDate(new Date(System.currentTimeMillis()));
+        record.setConsultationReason("Anulación de orden médica");
+        record.setProcedureDetails("Orden con ID " + orderId + " anulada.");
+        record.setOrderCanceled(true);
+        clinicalRecordPort.saveClinicalRecord(record);
     }
 
-
-    
-
-
-
+    public Order getOrderById(long orderId) throws Exception {
+        Order order = orderPort.findByOrderID(orderId);
+        if (order == null) {
+            throw new Exception("Error: No existe una orden con el ID " + orderId);
+        }
+        return order;
+    }
 }

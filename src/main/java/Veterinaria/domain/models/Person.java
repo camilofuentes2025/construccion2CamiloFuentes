@@ -6,6 +6,7 @@ public class Person {
     private String name;
     private long age;
     private String role;
+    
 	public long getId() {
 		return id;
 	}
@@ -30,6 +31,5 @@ public class Person {
 	public void setRole(String role) {
 		this.role = role;
 	}
-    
     
 }

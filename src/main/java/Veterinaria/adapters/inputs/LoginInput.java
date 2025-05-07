@@ -4,12 +4,21 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import Veterinaria.adapters.inputs.utils.UserValidator;
 import Veterinaria.adapters.inputs.utils.Utils;
 import Veterinaria.domain.models.User;
+import Veterinaria.domain.services.LoginService;
 import Veterinaria.ports.InputPort;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Setter
+@Getter
+@NoArgsConstructor
+@Component
 public class LoginInput implements InputPort {
 
     private Map<String, InputPort> inputs;
@@ -23,6 +32,8 @@ public class LoginInput implements InputPort {
     private OwnerInput ownerInput;
     @Autowired
     private UserValidator userValidator;
+    @Autowired
+    private LoginService loginService;
 
     private final String MENU = "Ingrese la opción que desea:\n 1. Iniciar sesión\n 2. Salir";
 
@@ -59,7 +70,7 @@ public class LoginInput implements InputPort {
             }
         }
     }
-
+    
     private void login() {
         try {
             System.out.println("Ingrese su usuario:");
@@ -68,6 +79,9 @@ public class LoginInput implements InputPort {
             String password = userValidator.passwordValidator(Utils.getReader().nextLine());
             
             User user = new User();
+            user.setUsername(username);
+            user.setPassword(password);
+            user=loginService.login(user);
             InputPort inputPort = inputs.get(user.getRole());
             if (inputPort !=null) {
             	inputPort.menu();

@@ -10,8 +10,14 @@ import Veterinaria.domain.models.Order;
 import Veterinaria.domain.models.Person;
 import Veterinaria.domain.models.Pet;
 import Veterinaria.domain.models.User;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Component
+@Setter
+@Getter
+@NoArgsConstructor
 public  class SimpleValidator {
 	
 	public String stringValidator(String value, String element)throws Exception {
@@ -138,7 +144,7 @@ public  class SimpleValidator {
 	        stringValidator(order.getMedicine(), "Nombre del medicamento");
 
 	      
-	        dateValidator(order.getDateCreated().toString(), "Fecha de creación de la orden");
+	        dateValidator(order.getDate().toString(), "Fecha de creación de la orden");
 
 	        return order;
 	    }

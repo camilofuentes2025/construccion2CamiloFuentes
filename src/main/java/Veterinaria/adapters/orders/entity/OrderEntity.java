@@ -1,7 +1,6 @@
 package Veterinaria.adapters.orders.entity;
 
 import java.sql.Date;
-
 import Veterinaria.adapters.persons.entity.PersonEntity;
 import Veterinaria.adapters.pets.entity.PetEntity;
 import Veterinaria.adapters.users.entity.UserEntity;
@@ -11,31 +10,34 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "orders")
-
+@Table(name = "tbl_order")
+@Getter
+@Setter
+@NoArgsConstructor
 public class OrderEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "orderID")
     private long orderID;
 
-    @ManyToOne
-    @JoinColumn(name = "petID")
+    @OneToOne
+    @JoinColumn(name = "pet_id")
     private PetEntity pet;
 
-    @ManyToOne
-    @JoinColumn(name = "petOwnerID")
-    private PersonEntity petOwner;
+    @OneToOne
+    @JoinColumn(name = "owner_id")
+    private PersonEntity person;
 
-    @ManyToOne
-    @JoinColumn(name = "veterinarianID")
-    private UserEntity veterinarian;
+    @OneToOne
+    @JoinColumn(name = "veterinarian_id")
+    private UserEntity user;
 
-    @Column(name = "clinicalRecord")
-    private String clinicalRecord;
+    @Column(name = "medicine")
+    private String medicine;
 
     @Column(name = "date")
-    private Date date; 
+    private Date date;
 
 	public long getOrderID() {
 		return orderID;
@@ -53,37 +55,37 @@ public class OrderEntity {
 		this.pet = pet;
 	}
 
-	public PersonEntity getPetOwner() {
-		return petOwner;
+	public PersonEntity getPerson() {
+		return person;
 	}
 
-	public void setPetOwner(PersonEntity petOwner) {
-		this.petOwner = petOwner;
+	public void setPerson(PersonEntity person) {
+		this.person = person;
 	}
 
-	public UserEntity getVeterinarian() {
-		return veterinarian;
+	public UserEntity getUser() {
+		return user;
 	}
 
-	public void setVeterinarian(UserEntity veterinarian) {
-		this.veterinarian = veterinarian;
+	public void setUser(UserEntity user) {
+		this.user = user;
 	}
 
-	public String getClinicalRecord() {
-		return clinicalRecord;
+	public String getMedicine() {
+		return medicine;
 	}
 
-	public void setClinicalRecord(String clinicalRecord) {
-		this.clinicalRecord = clinicalRecord;
+	public void setMedicine(String medicine) {
+		this.medicine = medicine;
 	}
 
 	public Date getDate() {
-        return date; 
-    }
+		return date;
+	}
 
-    public void setDate(Date date) {
-        this.date = date; 
-    }
-    }
-
-
+	public void setDate(Date date) {
+		this.date = date;
+	}
+    
+    
+}

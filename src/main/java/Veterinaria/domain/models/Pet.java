@@ -1,7 +1,5 @@
 package Veterinaria.domain.models;
 
-
-
 public class Pet {
 	
 	private String petName;
@@ -12,6 +10,7 @@ public class Pet {
 	private String animalBreed;
 	private String characteristics;
 	private long weight;
+	
 	public String getPetName() {
 		return petName;
 	}
@@ -60,6 +59,5 @@ public class Pet {
 	public void setWeight(long weight) {
 		this.weight = weight;
 	}
-	
     
 }

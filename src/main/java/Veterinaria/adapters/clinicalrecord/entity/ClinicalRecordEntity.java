@@ -1,6 +1,7 @@
 package Veterinaria.adapters.clinicalrecord.entity;
 
 import Veterinaria.adapters.orders.entity.OrderEntity;
+import Veterinaria.adapters.pets.entity.PetEntity;
 import Veterinaria.adapters.users.entity.UserEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -8,8 +9,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.sql.Date;
+
 @Entity
-@Table(name = "clinical_record")
+@Table(name = "clinicalrecord")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -17,17 +19,17 @@ public class ClinicalRecordEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "history_id") 
+    @Column(name = "historyID")
     private long historyID;
 
-    @Column(name = "date", nullable = false) 
+    @Column(name = "date")
     private Date date;
 
-    @ManyToOne
-    @JoinColumn(name = "veterinarian_id", nullable = false) 
-    private UserEntity veterinarian;
+    @OneToOne
+    @JoinColumn(name = "veterinarian_id")
+    private UserEntity user;
 
-    @Column(name = "consultation_reason", nullable = false)
+    @Column(name = "consultation_reason")
     private String consultationReason;
 
     @Column(name = "symptoms")
@@ -45,8 +47,8 @@ public class ClinicalRecordEntity {
     @Column(name = "dosage")
     private String dosage;
 
-    @ManyToOne
-    @JoinColumn(name = "order_id") 
+    @OneToOne
+    @JoinColumn(name = "order_id")
     private OrderEntity order;
 
     @Column(name = "vaccination_history")
@@ -58,8 +60,12 @@ public class ClinicalRecordEntity {
     @Column(name = "procedure_details")
     private String procedureDetails;
 
-    @Column(name = "order_canceled", nullable = false)
+    @Column(name = "order_canceled")
     private boolean orderCanceled;
+
+    @OneToOne
+    @JoinColumn(name = "pet_id")
+    private PetEntity pet;
 
 	public long getHistoryID() {
 		return historyID;
@@ -69,8 +75,6 @@ public class ClinicalRecordEntity {
 		this.historyID = historyID;
 	}
 
-
-
 	public Date getDate() {
 		return date;
 	}
@@ -79,12 +83,12 @@ public class ClinicalRecordEntity {
 		this.date = date;
 	}
 
-	public UserEntity getVeterinarian() {
-		return veterinarian;
+	public UserEntity getUser() {
+		return user;
 	}
 
-	public void setVeterinarian(UserEntity veterinarian) {
-		this.veterinarian = veterinarian;
+	public void setUser(UserEntity user) {
+		this.user = user;
 	}
 
 	public String getConsultationReason() {
@@ -173,6 +177,14 @@ public class ClinicalRecordEntity {
 
 	public void setOrderCanceled(boolean orderCanceled) {
 		this.orderCanceled = orderCanceled;
+	}
+
+	public PetEntity getPet() {
+		return pet;
+	}
+
+	public void setPet(PetEntity pet) {
+		this.pet = pet;
 	}
     
     

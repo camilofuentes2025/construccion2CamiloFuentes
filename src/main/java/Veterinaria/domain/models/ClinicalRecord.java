@@ -2,7 +2,6 @@ package Veterinaria.domain.models;
 
 import java.sql.Date;
 
-
 public class ClinicalRecord {
 	private long historyID;
 	private Date date;
@@ -18,8 +17,14 @@ public class ClinicalRecord {
     private String allergyMedications; 
     private String procedureDetails;  
     private boolean orderCanceled;
-	
+	private Pet petID;
     
+	public Pet getPetID() {
+		return petID;
+	}
+	public void setPetID(Pet petID) {
+		this.petID = petID;
+	}
 	public long getHistoryID() {
 		return historyID;
 	}
@@ -105,9 +110,5 @@ public class ClinicalRecord {
 	public void setDate(Date date) {
 		this.date = date;
 	}
-	
-
-	
-    
-    
-}//cambio private long orderID por private Order orderID
+	  
+}

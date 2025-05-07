@@ -30,16 +30,13 @@ public class PersonAdapter implements PersonPort {
         personRepository.save(personEntity);
         person.setId(personEntity.getId());
     }
-    /* person.setPersonId(personEntity.getPersonId());*/
-
+  
     @Override
     public Person findById(long id) {
     	PersonEntity personEntity = personRepository.findById(id);
     	return convertToPerson(personEntity);
     }
-    /* PersonEntity personEntity = personRepository.findById(id).orElse(null);
-        return convertToPerson(personEntity);*/
-    
+ 
     private Person convertToPerson(PersonEntity personEntity) {
         if (personEntity == null) return null;
         

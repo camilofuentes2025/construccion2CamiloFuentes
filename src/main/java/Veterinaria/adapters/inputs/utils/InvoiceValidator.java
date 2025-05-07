@@ -2,11 +2,20 @@ package Veterinaria.adapters.inputs.utils;
 
 import java.sql.Date;
 
+import org.springframework.stereotype.Component;
+
 import Veterinaria.domain.models.Order;
 import Veterinaria.domain.models.Person;
 import Veterinaria.domain.models.Pet;
 import Veterinaria.domain.models.User;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Component
+@Setter
+@Getter
+@NoArgsConstructor
 public class InvoiceValidator extends SimpleValidator{
 
     public long invoiceIDValidator(String value) throws Exception {

@@ -109,7 +109,7 @@ public class DealerInput implements InputPort {
         invoice.setMedicine(order.getMedicine()); // Asigna el nombre del medicamento
         invoice.setAmount(amount); // Asigna la cantidad suministrada (amount)
         //invoice.setPrice(calculatePrice(order.getMedicine(), amount)); // Calcula el precio basado en la cantidad
-        invoice.setDateCreated(new java.sql.Date(System.currentTimeMillis())); // Registra la fecha actual
+        invoice.setDate(new java.sql.Date(System.currentTimeMillis())); // Registra la fecha actual
         invoice.setPet(order.getPet()); // Asocia la mascota
         invoice.setOwner(order.getOwner()); // Asocia el dueño
 

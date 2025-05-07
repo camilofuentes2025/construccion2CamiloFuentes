@@ -1,6 +1,16 @@
 package Veterinaria.adapters.inputs.utils;
 
+import org.springframework.stereotype.Component;
+
 import Veterinaria.domain.models.Person;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Component
+@Setter
+@Getter
+@NoArgsConstructor
 
 public class PetValidator extends SimpleValidator {
 	
