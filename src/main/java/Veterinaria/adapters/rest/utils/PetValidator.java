@@ -1,4 +1,4 @@
-package Veterinaria.adapters.inputs.utils;
+package Veterinaria.adapters.rest.utils;
 
 import org.springframework.stereotype.Component;
 
@@ -19,8 +19,11 @@ public class PetValidator extends SimpleValidator {
 	}
 	
 	public Person ownerValidator(Person owner) throws Exception {
-	        return personValidator(owner, "Dueño de la mascota");
-	}
+	        if (owner == null) {
+	            throw new Exception("El dueño de la mascota no puede ser nulo.");
+	        }
+	        return owner;
+	    }
 	
 	public long ageValidator(String value)throws Exception {
 		return longValidator(value, " numero de años ");

@@ -1,11 +1,9 @@
-package Veterinaria.adapters.inputs.utils;
-
+package Veterinaria.adapters.rest.utils;
 
 import java.sql.Date;
 
 import org.springframework.stereotype.Component;
 
-import Veterinaria.adapters.inputs.utils.SimpleValidator;
 import Veterinaria.domain.models.Order;
 import Veterinaria.domain.models.Person;
 import Veterinaria.domain.models.Pet;
@@ -24,12 +22,15 @@ public class ClinicalRecordValidator extends SimpleValidator {
     	return longValidator(value, " ID del historial clinico ");
     }
     
-    public Date dateValidator(String dateInput) throws Exception {
-        return dateValidator(dateInput, "Fecha de creación de la orden");
+    public String dateValidator(String value) throws Exception {
+        return stringValidator(value, "Fecha de creación de la orden");
     }
 
     public User veterinarianValidator(User user) throws Exception {
-    	return userValidator(user, " ID del veterinario que atendio ");
+        if (user == null) {
+            throw new Exception("El veterinario no puede ser nulo.");
+        }
+        return user;
     }
     
     public String consultationReasonValidator(String value) throws Exception {
@@ -57,7 +58,10 @@ public class ClinicalRecordValidator extends SimpleValidator {
     }
     
     public Order orderValidator(Order order) throws Exception {
-    	return orderValidator(order, " ID de la orden ");
+        if (order == null) {
+            throw new Exception("la orden no puede ser nulo.");
+        }
+        return order;
     }
     
     public String vaccinationHistoryValidator(String value) throws Exception {

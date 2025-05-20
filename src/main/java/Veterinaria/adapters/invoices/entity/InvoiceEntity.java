@@ -26,9 +26,10 @@ public class InvoiceEntity {
     @JoinColumn(name = "pet_id")
     private PetEntity pet;
 
-    @OneToOne
-    @JoinColumn(name = "owner_id")
-    private PersonEntity person;
+    
+    @ManyToOne
+    @JoinColumn(name = "owner_id", nullable = false)
+    private PersonEntity owner;
 
     @OneToOne
     @JoinColumn(name = "order_id")
@@ -63,11 +64,11 @@ public class InvoiceEntity {
 	}
 
 	public PersonEntity getPerson() {
-		return person;
+		return owner;
 	}
 
 	public void setPerson(PersonEntity person) {
-		this.person = person;
+		this.owner = person;
 	}
 
 	public OrderEntity getOrder() {

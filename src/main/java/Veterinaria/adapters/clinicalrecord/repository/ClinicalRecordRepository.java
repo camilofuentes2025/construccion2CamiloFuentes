@@ -10,6 +10,6 @@ public interface ClinicalRecordRepository extends JpaRepository<ClinicalRecordEn
 
     boolean existsByHistoryID(long historyID);
     ClinicalRecordEntity findByHistoryID(long historyID);
-    List<ClinicalRecordEntity> findByPetID(PetEntity pet);
+    List<ClinicalRecordEntity> findByPet(PetEntity pet);
     
 }

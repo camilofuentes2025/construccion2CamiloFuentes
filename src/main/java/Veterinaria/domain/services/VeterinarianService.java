@@ -66,12 +66,16 @@ public class VeterinarianService {
 
 
     public Order createOrder(Order order) throws Exception {
-        if (!petPort.existPet(order.getPet().getPetID())) {
-            throw new Exception("Error: La mascota con ID " + order.getPet().getPetID() + " no está registrada.");
+        // 🔹 Validar que la orden tenga una mascota asignada
+        if (order.getPet() == null || order.getPet().getPetID() <= 0) {
+            throw new Exception("Error: La orden debe estar asociada a una mascota válida.");
         }
+
+        // 🔹 Guardar la orden en la BD
         orderPort.saveOrder(order);
-        return order;
+        return order; // Retornar la orden registrada con ID
     }
+
 
  
     public void cancelOrder(Long orderId) throws Exception {

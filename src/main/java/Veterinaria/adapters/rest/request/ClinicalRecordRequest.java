@@ -1,191 +1,126 @@
-package Veterinaria.adapters.clinicalrecord.entity;
-
-import Veterinaria.adapters.orders.entity.OrderEntity;
-import Veterinaria.adapters.pets.entity.PetEntity;
-import Veterinaria.adapters.users.entity.UserEntity;
-import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+package Veterinaria.adapters.rest.request;
 
 import java.sql.Date;
 
-@Entity
-@Table(name = "clinicalrecord")
-@Getter
-@Setter
-@NoArgsConstructor
-public class ClinicalRecordEntity {
+import Veterinaria.domain.models.Order;
+import Veterinaria.domain.models.Pet;
+import Veterinaria.domain.models.User;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "historyID")
-    private long historyID;
-
-    @Column(name = "date")
-    private Date date;
-
-    @OneToOne
-    @JoinColumn(name = "veterinarian_id")
-    private UserEntity user;
-
-    @Column(name = "consultation_reason")
-    private String consultationReason;
-
-    @Column(name = "symptoms")
-    private String symptoms;
-
-    @Column(name = "diagnosis")
-    private String diagnosis;
-    
-    @Column(name = "procedure_name")
-    private String procedure;
-
-    @Column(name = "medication")
-    private String medication;
-
-    @Column(name = "dosage")
-    private String dosage;
-
-    @OneToOne
-    @JoinColumn(name = "order_id")
-    private OrderEntity order;
-
-    @Column(name = "vaccination_history")
-    private String vaccinationHistory;
-
-    @Column(name = "allergy_medications")
-    private String allergyMedications;
-
-    @Column(name = "procedure_details")
-    private String procedureDetails;
-
-    @Column(name = "order_canceled")
+public class ClinicalRecordRequest {
+	
+	private long historyID;
+	private Date date;
+    private User veterinarian;        
+    private String consultationReason; 
+    private String symptoms;          
+    private String diagnosis;         
+    private String procedure;        
+    private String medication;        
+    private String dosage;            
+    private Order order;             
+    private String vaccinationHistory; 
+    private String allergyMedications; 
+    private String procedureDetails;  
     private boolean orderCanceled;
-
-    @OneToOne
-    @JoinColumn(name = "pet_id")
-    private PetEntity pet;
-
+	private Pet petID;
 	public long getHistoryID() {
 		return historyID;
 	}
-
 	public void setHistoryID(long historyID) {
 		this.historyID = historyID;
 	}
-
 	public Date getDate() {
 		return date;
 	}
-
 	public void setDate(Date date) {
 		this.date = date;
 	}
-
-	public UserEntity getUser() {
-		return user;
+	public User getVeterinarian() {
+		return veterinarian;
 	}
-
-	public void setUser(UserEntity user) {
-		this.user = user;
+	public void setVeterinarian(User veterinarian) {
+		this.veterinarian = veterinarian;
 	}
-
 	public String getConsultationReason() {
 		return consultationReason;
 	}
-
 	public void setConsultationReason(String consultationReason) {
 		this.consultationReason = consultationReason;
 	}
-
 	public String getSymptoms() {
 		return symptoms;
 	}
-
 	public void setSymptoms(String symptoms) {
 		this.symptoms = symptoms;
 	}
-
 	public String getDiagnosis() {
 		return diagnosis;
 	}
-
 	public void setDiagnosis(String diagnosis) {
 		this.diagnosis = diagnosis;
 	}
-
 	public String getProcedure() {
 		return procedure;
 	}
-
 	public void setProcedure(String procedure) {
 		this.procedure = procedure;
 	}
-
 	public String getMedication() {
 		return medication;
 	}
-
 	public void setMedication(String medication) {
 		this.medication = medication;
 	}
-
 	public String getDosage() {
 		return dosage;
 	}
-
 	public void setDosage(String dosage) {
 		this.dosage = dosage;
 	}
-
-	public OrderEntity getOrder() {
+	public Order getOrder() {
 		return order;
 	}
-
-	public void setOrder(OrderEntity order) {
+	public void setOrder(Order order) {
 		this.order = order;
 	}
-
 	public String getVaccinationHistory() {
 		return vaccinationHistory;
 	}
-
 	public void setVaccinationHistory(String vaccinationHistory) {
 		this.vaccinationHistory = vaccinationHistory;
 	}
-
 	public String getAllergyMedications() {
 		return allergyMedications;
 	}
-
 	public void setAllergyMedications(String allergyMedications) {
 		this.allergyMedications = allergyMedications;
 	}
-
 	public String getProcedureDetails() {
 		return procedureDetails;
 	}
-
 	public void setProcedureDetails(String procedureDetails) {
 		this.procedureDetails = procedureDetails;
 	}
-
 	public boolean isOrderCanceled() {
 		return orderCanceled;
 	}
-
 	public void setOrderCanceled(boolean orderCanceled) {
 		this.orderCanceled = orderCanceled;
 	}
-
-	public PetEntity getPet() {
-		return pet;
+	public Pet getPetID() {
+		return petID;
 	}
-
-	public void setPet(PetEntity pet) {
-		this.pet = pet;
+	public void setPetID(Pet petID) {
+		this.petID = petID;
 	}
-    
-    
+	@Override
+	public String toString() {
+		return "ClinicalRecordRequest [historyID=" + historyID + ", date=" + date + ", veterinarian=" + veterinarian
+				+ ", consultationReason=" + consultationReason + ", symptoms=" + symptoms + ", diagnosis=" + diagnosis
+				+ ", procedure=" + procedure + ", medication=" + medication + ", dosage=" + dosage + ", order=" + order
+				+ ", vaccinationHistory=" + vaccinationHistory + ", allergyMedications=" + allergyMedications
+				+ ", procedureDetails=" + procedureDetails + ", orderCanceled=" + orderCanceled + ", petID=" + petID
+				+ "]";
+	}
+	
 }

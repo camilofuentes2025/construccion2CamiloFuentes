@@ -50,7 +50,7 @@ public class ClinicalRecordAdapter implements ClinicalRecordPort {
     @Override
     public List<ClinicalRecord> findByPetID(Pet pet) {
     	PetEntity petEntity = petAdapter(pet);
-        List<ClinicalRecordEntity> records = clinicalRecordRepository.findByPetID(petEntity);
+        List<ClinicalRecordEntity> records = clinicalRecordRepository.findByPet(petEntity);
         return records.stream()
                 .map(this::convertToClinicalRecord)
                 .collect(Collectors.toList());

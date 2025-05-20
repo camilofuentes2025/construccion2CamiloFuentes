@@ -1,4 +1,4 @@
-package Veterinaria.adapters.inputs.utils;
+package Veterinaria.adapters.rest.utils;
 
 import java.util.Scanner;
 

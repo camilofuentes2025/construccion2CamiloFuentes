@@ -1,4 +1,4 @@
-package Veterinaria.adapters.inputs.utils;
+package Veterinaria.adapters.rest.utils;
 
 import java.sql.Date;
 
@@ -23,31 +23,47 @@ public class InvoiceValidator extends SimpleValidator{
     }
 
     public Pet petValidator(Pet pet) throws Exception {
-        return petValidator(pet, "Mascota");
+        if (pet == null) {
+            throw new Exception("La mascota no puede ser nula.");
+        }
+        return pet;
     }
 
     public Person ownerValidator(Person owner) throws Exception {
-        return personValidator(owner, "Dueño de la mascota");
+        if (owner == null) {
+            throw new Exception("El dueño de la mascota no puede ser nulo.");
+        }
+        return owner;
     }
     
     public Order orderValidator(Order order) throws Exception {
-    	return orderValidator(order, "numero de ID de orden ");
+        if (order == null) {
+            throw new Exception("la orden no puede ser nulo.");
+        }
+        return order;
     }
 
     public String medicineValidator(String value) throws Exception {
     	return stringValidator(value, "nombre de la medicina/producto ");
     }
     
-    public long priceValidator(String value) throws Exception {
-    	return longValidator(value, " precio ");
+    public int priceValidator(int value) throws Exception {
+        if (value <= 0) {
+            throw new Exception("El precio debe ser mayor que cero.");
+        }
+        return value;
     }
-    
-    public long amountValidator(String value) throws Exception {
-    	return longValidator(value, " cantidad ");
+
+public long amountValidator(long value) throws Exception {
+    if (value <= 0) {
+        throw new Exception("La cantidad debe ser mayor que cero.");
     }
+    return value;
+}
+
     
-    public Date dateCreatedValidator(String dateInput) throws Exception {
-        return dateValidator(dateInput, "Fecha de creación de la orden");
+    public String dateCreatedValidator(String value) throws Exception {
+        return stringValidator(value, "Fecha de creación de la orden");
     }
     
 }

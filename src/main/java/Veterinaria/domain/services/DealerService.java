@@ -31,13 +31,15 @@ public class DealerService {
 
     public void registerSale(Invoice invoice) throws Exception {
         if (invoicePort.existInvoice(invoice.getInvoiceID())) {
-            throw new Exception("La factura con ID " + invoice.getInvoiceID() + " ya existe.");
+            throw new Exception("Error: La factura con ID " + invoice.getInvoiceID() + " ya existe.");
         }
-        if (invoice.getOrder() != null && !orderPort.existOrder(invoice.getOrder().getOrderID())) {
-            throw new Exception("La factura no está asociada a ninguna orden existente.");
+        if (invoice.getOrder() == null || !orderPort.existOrder(invoice.getOrder().getOrderID())) {
+            throw new Exception("Error: La factura no está asociada a ninguna orden existente.");
         }
-        invoicePort.saveInvoice(invoice);
+
+        invoicePort.saveInvoice(invoice); // Guarda la factura con la orden vinculada
     }
+
 
     public List<Order> listOrders() {
         return orderPort.findAllOrders();
